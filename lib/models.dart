@@ -40,8 +40,8 @@ enum WorkoutState {
   initial,
   starting,
   exercising,
-  resting,
-  breaking,
+  repResting,
+  setResting,
   finished
 }
 
