@@ -1,6 +1,3 @@
-import 'package:flutter/material.dart';
-import 'main.dart';
-
 // Default values for the timer
 Hiit get defaultHiit => Hiit(
   reps: 3,
@@ -35,14 +32,33 @@ class Hiit{
   });
 
   Duration getTotalTime() {
-    // TODO: Function to get the total time of the workout
-    throw UnimplementedError();
+    return (workTime * reps * sets) + (repRest * sets * (reps-1)) + (setRest * (sets-1));
   }
 
+  // Function to format the time
   String formatTime(Duration duration) {
-    // TODO: Function to format the time based on user input
-    throw UnimplementedError();
+    String minutes = (duration.inMinutes).toString().padLeft(2, '0');
+    String seconds = (duration.inSeconds % 60).toString().padLeft(2, '0');
+    return '$minutes:$seconds';
   }
+
+  Hiit.fromJson(Map<String, dynamic> json) :
+        reps = json['reps'],
+        workTime = Duration(seconds: json['workTime']),
+        repRest = Duration(seconds: json['repRest']),
+        sets = json['sets'],
+        setRest = Duration(seconds: json['setRest']),
+        delayTime = Duration(seconds: json['delayTime']);
+
+  Map<String, dynamic> toJson() => {
+    'reps': reps,
+    'workTime': workTime.inSeconds,
+    'repRest': repRest.inSeconds,
+    'sets': sets,
+    'setRest': setRest.inSeconds,
+    'delayTime': delayTime.inSeconds,
+  };
+
 }
 
 // All the possible workout states

@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:interval_timer/screens/workout_screen.dart';
+
+import '../models.dart';
 
 class HiitScreen extends StatefulWidget {
   @override
@@ -8,6 +12,14 @@ class HiitScreen extends StatefulWidget {
 }
 
 class _HiitScreenState extends State<HiitScreen> {
+  Hiit _hiit;
+
+  @override
+  initState() {
+    _hiit = defaultHiit;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +51,7 @@ class _HiitScreenState extends State<HiitScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          Text("10:10",
+                          Text(_hiit.formatTime(_hiit.getTotalTime()),
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 80,
@@ -86,7 +98,7 @@ class _HiitScreenState extends State<HiitScreen> {
                           // Exercise Time
                           ListTile(
                             title: Text('Exercise Time'),
-                            subtitle: Text('exercise time'),
+                            subtitle: Text(_hiit.formatTime(_hiit.workTime)),
                             leading: Icon(Icons.timer),
                             onTap: () {
                               // TODO: Show duration picker
@@ -95,7 +107,7 @@ class _HiitScreenState extends State<HiitScreen> {
                           // Rest Time
                           ListTile(
                             title: Text('Rest Time'),
-                            subtitle: Text('rest time'),
+                            subtitle: Text(_hiit.formatTime(_hiit.repRest)),
                             leading: Icon(Icons.timer),
                             onTap: () {
                               // TODO: Show duration picker
@@ -104,7 +116,7 @@ class _HiitScreenState extends State<HiitScreen> {
                           // Reps
                           ListTile(
                             title: Text('Reps'),
-                            subtitle: Text('rep time'),
+                            subtitle: Text('${_hiit.reps}'),
                             leading: Icon(Icons.repeat),
                             onTap: () {
                               // TODO: Show duration picker
@@ -113,7 +125,7 @@ class _HiitScreenState extends State<HiitScreen> {
                           // Sets
                           ListTile(
                             title: Text('Sets'),
-                            subtitle: Text('sets'),
+                            subtitle: Text('${_hiit.sets}'),
                             leading: Icon(Icons.fitness_center),
                             onTap: () {
                               // TODO: Show duration picker
@@ -122,7 +134,7 @@ class _HiitScreenState extends State<HiitScreen> {
                           // Set Rest
                           ListTile(
                             title: Text('Set Rest'),
-                            subtitle: Text('set rest'),
+                            subtitle: Text(_hiit.formatTime(_hiit.setRest)),
                             leading: Icon(Icons.timer),
                             onTap: () {
                               // TODO: Show duration picker
