@@ -1,6 +1,16 @@
 import 'package:flutter/material.dart';
 import 'main.dart';
 
+// Default values for the timer
+Hiit get defaultHiit => Hiit(
+  reps: 3,
+  workTime: Duration(seconds: 60),
+  repRest: Duration(seconds: 30),
+  sets: 2,
+  setRest: Duration(seconds: 45),
+  delayTime: Duration(seconds: 3)
+);
+
 class Hiit{
   // Reps in a workout
   int reps;
@@ -13,7 +23,7 @@ class Hiit{
   // Rest time between each set
   Duration setRest;
   // Initial countdown before the workout
-  Duration dealyTime;
+  Duration delayTime;
 
   Hiit({
     this.reps,
@@ -21,7 +31,7 @@ class Hiit{
     this.repRest,
     this.sets,
     this.setRest,
-    this.dealyTime,
+    this.delayTime,
   });
 
   Duration getTotalTime() {
