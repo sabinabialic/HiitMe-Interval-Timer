@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:interval_timer/screens/workout_screen.dart';
 
 class HiitScreen extends StatefulWidget {
   @override
@@ -51,8 +52,13 @@ class _HiitScreenState extends State<HiitScreen> {
                           Padding(
                             padding: EdgeInsets.only(top: 40),
                             child: FloatingActionButton.extended(
+                              // TODO: Start the workout
                               onPressed: () {
-                                // TODO: Start the workout
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => WorkoutScreen())
+                                );
                               },
                               backgroundColor: Colors.black45,
                               splashColor: Colors.deepPurple[800],
