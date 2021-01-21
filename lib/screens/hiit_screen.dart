@@ -69,7 +69,9 @@ class _HiitScreenState extends State<HiitScreen> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => WorkoutScreen())
+                                    builder: (context) => WorkoutScreen(
+                                      hiit: _hiit
+                                    ))
                                 );
                               },
                               backgroundColor: Colors.black45,
