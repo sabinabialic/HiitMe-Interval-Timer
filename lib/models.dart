@@ -73,44 +73,45 @@ enum WorkoutState {
 
 class Workout {
   Hiit _hiit;
+
   // Callback for when the workout state is changed
   Function _onStateChanged;
-  // Workout stage
   WorkoutState _step = WorkoutState.initial;
+
   // Time left in the current stage
   Duration _timeRemaining;
   // Total time elapsed
   Duration _totalTimeElapsed = Duration(seconds: 0);
+
   // Current rep
   int _rep = 0;
   // Current set
   int _set = 0;
 
+  Workout(this._hiit, this._onStateChanged);
+
   // Getters
+  get hiit => _hiit;
   get rep => _rep;
   get set => _set;
   get step => _step;
   get timeRemaining => _timeRemaining;
   get totalTimeElapsed => _totalTimeElapsed;
 
-  Workout(this._hiit, this._onStateChanged);
-
   start() {
     // TODO: Function which starts or resumes the workout
     // Need to consider the current workout state
     if (_step == WorkoutState.initial) {
       _step = WorkoutState.starting;
-      if (_hiit.delayTime.inSeconds == 0) {
-        _nextStep();
-      } else {
-        _timeRemaining = _hiit.delayTime;
-      }
+      if (_hiit.delayTime.inSeconds == 0) { _nextStep(); }
+      else { _timeRemaining = _hiit.delayTime; }
     }
+    _onStateChanged();
   }
 
   pause() {
     // TODO: Function which pauses the workout
-    throw UnimplementedError();
+    _onStateChanged();
   }
 
   stop() {
@@ -121,7 +122,18 @@ class Workout {
   _nextStep() {
     // TODO: Function which moves the workout to the next step
     // Need to consider the current state of the workout
-    throw UnimplementedError();
+    if (_step != WorkoutState.exercising) {
+      if (rep == _hiit.reps) {
+        if (set == _hiit.sets) { _finish(); }
+        else {_startSetRest(); }
+      }
+      else { _startRepRest(); }
+    }
+    else if (_step == WorkoutState.repResting) { _startRep(); }
+    else if (_step == WorkoutState.setResting ||
+        _step == WorkoutState.starting) {
+      _startSet();
+    }
   }
 
   _startRep() {

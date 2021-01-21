@@ -5,8 +5,8 @@ import '../main.dart';
 import '../models.dart';
 
 // All the possible states of the timer
-String workoutStage (WorkoutState stage) {
-  switch (stage) {
+String workoutStage (WorkoutState step) {
+  switch (step) {
     case WorkoutState.starting: return "Starting";
     case WorkoutState.exercising: return "Exercise";
     case WorkoutState.repResting: return "Rep Rest";
@@ -32,8 +32,8 @@ class _WorkoutScreenState extends State<WorkoutScreen>{
   initState() {
     super.initState();
     _workout = Workout(widget.hiit, _onWorkoutChanged);
-    // Start the timer
-    _start();
+    // TODO - Start the timer
+    //_start();
   }
 
   //
@@ -84,9 +84,7 @@ class _WorkoutScreenState extends State<WorkoutScreen>{
         children: <Widget> [
           Container(
             // Background of the screen
-            // TODO - Implement states before being able to do this
-            //decoration: _backgroundColour(theme),
-            color: Colors.purple,
+            decoration: _backgroundColour(theme),
             padding: EdgeInsets.symmetric(horizontal: 30),
             child: Column(
               children: <Widget>[
