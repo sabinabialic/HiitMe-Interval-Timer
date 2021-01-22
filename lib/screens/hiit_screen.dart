@@ -25,7 +25,10 @@ class _HiitScreenState extends State<HiitScreen> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: Text("Interval Timer"),
+        title: Text(
+          "Interval Timer",
+          style: TextStyle(fontFamily: "Roboto", fontSize: 30)
+        ),
         elevation: defaultTargetPlatform == TargetPlatform.android ? 5.0 : 0.0,
         backgroundColor: Color(0xFFFFFF),
       ),
@@ -77,7 +80,12 @@ class _HiitScreenState extends State<HiitScreen> {
                               backgroundColor: Colors.black45,
                               splashColor: Colors.deepPurple[800],
                               icon: Icon(Icons.play_arrow),
-                              label: Text("Start Workout"),
+                              label: Text(
+                                  "Start Workout",
+                                  style: TextStyle(
+                                      fontFamily: "Roboto", fontSize: 20
+                                  )
+                              ),
                             ),
                           ),
                         ],
