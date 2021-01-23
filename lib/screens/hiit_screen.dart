@@ -27,7 +27,7 @@ class _HiitScreenState extends State<HiitScreen> {
       appBar: AppBar(
         title: Text(
           "Interval Timer",
-          style: TextStyle(fontFamily: "Roboto", fontSize: 30)
+          style: TextStyle(fontFamily: "Roboto", fontSize: 28)
         ),
         elevation: defaultTargetPlatform == TargetPlatform.android ? 5.0 : 0.0,
         backgroundColor: Color(0xFFFFFF),
@@ -65,7 +65,7 @@ class _HiitScreenState extends State<HiitScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Padding(
-                            padding: EdgeInsets.only(top: 40),
+                            padding: EdgeInsets.only(top: 50),
                             child: FloatingActionButton.extended(
                               // TODO: Start the workout
                               onPressed: () {
@@ -83,7 +83,8 @@ class _HiitScreenState extends State<HiitScreen> {
                               label: Text(
                                   "Start Workout",
                                   style: TextStyle(
-                                      fontFamily: "Roboto", fontSize: 20
+                                      fontFamily: "Roboto",
+                                      fontSize: 16
                                   )
                               ),
                             ),
@@ -107,7 +108,13 @@ class _HiitScreenState extends State<HiitScreen> {
                         child: Column(children: <Widget>[
                           // Exercise Time
                           ListTile(
-                            title: Text('Exercise Time'),
+                            title: Text(
+                                "Exercise Time",
+                                style: TextStyle(
+                                    fontFamily: "Raleway",
+                                    fontWeight: FontWeight.w500
+                                )
+                            ),
                             subtitle: Text(_hiit.formatTime(_hiit.workTime)),
                             leading: Icon(Icons.timer),
                             onTap: () {
@@ -116,7 +123,13 @@ class _HiitScreenState extends State<HiitScreen> {
                           ),
                           // Rest Time
                           ListTile(
-                            title: Text('Rest Time'),
+                            title: Text(
+                              "Rest Time",
+                                style: TextStyle(
+                                    fontFamily: "Raleway",
+                                    fontWeight: FontWeight.w500
+                                )
+                            ),
                             subtitle: Text(_hiit.formatTime(_hiit.repRest)),
                             leading: Icon(Icons.timer),
                             onTap: () {
@@ -125,7 +138,13 @@ class _HiitScreenState extends State<HiitScreen> {
                           ),
                           // Reps
                           ListTile(
-                            title: Text('Reps'),
+                            title: Text(
+                                "Reps",
+                                style: TextStyle(
+                                    fontFamily: "Raleway",
+                                    fontWeight: FontWeight.w500
+                                )
+                            ),
                             subtitle: Text('${_hiit.reps}'),
                             leading: Icon(Icons.repeat),
                             onTap: () {
@@ -134,7 +153,13 @@ class _HiitScreenState extends State<HiitScreen> {
                           ),
                           // Sets
                           ListTile(
-                            title: Text('Sets'),
+                            title: Text(
+                                "Sets",
+                                style: TextStyle(
+                                    fontFamily: "Raleway",
+                                    fontWeight: FontWeight.w500,
+                                )
+                            ),
                             subtitle: Text('${_hiit.sets}'),
                             leading: Icon(Icons.fitness_center),
                             onTap: () {
@@ -143,7 +168,13 @@ class _HiitScreenState extends State<HiitScreen> {
                           ),
                           // Set Rest
                           ListTile(
-                            title: Text('Set Rest'),
+                            title: Text(
+                                "Set Rest",
+                                style: TextStyle(
+                                    fontFamily: "Raleway",
+                                    fontWeight: FontWeight.w500
+                                )
+                            ),
                             subtitle: Text(_hiit.formatTime(_hiit.setRest)),
                             leading: Icon(Icons.timer),
                             onTap: () {
