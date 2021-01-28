@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:interval_timer/screens/workout_screen.dart';
+import 'package:interval_timer/widgets/durationpicker.dart';
 
 import '../models.dart';
 
@@ -18,6 +19,11 @@ class _HiitScreenState extends State<HiitScreen> {
   initState() {
     _hiit = defaultHiit;
     super.initState();
+  }
+
+  // Callback for when the duration changes
+  _onHiitChanged() {
+    setState(() {});
   }
 
   @override
@@ -119,6 +125,21 @@ class _HiitScreenState extends State<HiitScreen> {
                             leading: Icon(Icons.timer),
                             onTap: () {
                               // TODO: Show duration picker
+                              showDialog<Duration>(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return DurationPicker(
+                                    initDuration: _hiit.workTime,
+                                    title: Text("Exercise time for each rep",
+                                      textAlign: TextAlign.center)
+                                  );
+                                }).then((workTime){
+                                // If null, don't do anything
+                                if (workTime == null) return;
+                                // Update the work time to reflect user input
+                                _hiit.workTime = workTime;
+                                _onHiitChanged();
+                              });
                             },
                           ),
                           // Rest Time
