@@ -272,7 +272,7 @@ class _HiitScreenState extends State<HiitScreen> {
                                 // If null, don't do anything
                                 if (setRestTime == null) return;
                                 // Update the rest time after each set to reflect user input
-                                _hiit.repRest = setRestTime;
+                                _hiit.setRest = setRestTime;
                                 _onHiitChanged();
                               });
                             },
