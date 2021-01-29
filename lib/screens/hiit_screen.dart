@@ -131,7 +131,9 @@ class _HiitScreenState extends State<HiitScreen> {
                                   return DurationPicker(
                                     initDuration: _hiit.workTime,
                                     title: Text("Exercise time for each rep",
-                                      textAlign: TextAlign.center)
+                                      textAlign: TextAlign.center,
+                                        style: TextStyle(fontSize: 16)
+                                    )
                                   );
                                 }).then((workTime){
                                 // If null, don't do anything
@@ -155,6 +157,23 @@ class _HiitScreenState extends State<HiitScreen> {
                             leading: Icon(Icons.timer),
                             onTap: () {
                               // TODO: Show duration picker
+                              showDialog<Duration>(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return DurationPicker(
+                                        initDuration: _hiit.repRest,
+                                        title: Text("Rest time between each rep",
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(fontSize: 16)
+                                        )
+                                    );
+                                  }).then((repRestTime){
+                                // If null, don't do anything
+                                if (repRestTime == null) return;
+                                // Update the work time to reflect user input
+                                _hiit.repRest = repRestTime;
+                                _onHiitChanged();
+                              });
                             },
                           ),
                           // Reps
@@ -200,6 +219,23 @@ class _HiitScreenState extends State<HiitScreen> {
                             leading: Icon(Icons.timer),
                             onTap: () {
                               // TODO: Show duration picker
+                              showDialog<Duration>(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return DurationPicker(
+                                        initDuration: _hiit.setRest,
+                                        title: Text("Rest time between each set",
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(fontSize: 16)
+                                        )
+                                    );
+                                  }).then((setRestTime){
+                                // If null, don't do anything
+                                if (setRestTime == null) return;
+                                // Update the work time to reflect user input
+                                _hiit.repRest = setRestTime;
+                                _onHiitChanged();
+                              });
                             },
                           ),
                         ]),
