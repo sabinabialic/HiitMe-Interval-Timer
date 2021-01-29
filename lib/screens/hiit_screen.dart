@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:interval_timer/screens/workout_screen.dart';
 import 'package:interval_timer/widgets/durationpicker.dart';
+import 'package:numberpicker/numberpicker.dart';
 
 import '../models.dart';
 
@@ -124,11 +125,11 @@ class _HiitScreenState extends State<HiitScreen> {
                             subtitle: Text(_hiit.formatTime(_hiit.workTime)),
                             leading: Icon(Icons.timer),
                             onTap: () {
-                              // TODO: Show duration picker
                               showDialog<Duration>(
                                 context: context,
                                 builder: (BuildContext context) {
                                   return DurationPicker(
+                                    // Set the initial duration
                                     initDuration: _hiit.workTime,
                                     title: Text("Exercise time for each rep",
                                       textAlign: TextAlign.center,
@@ -156,11 +157,11 @@ class _HiitScreenState extends State<HiitScreen> {
                             subtitle: Text(_hiit.formatTime(_hiit.repRest)),
                             leading: Icon(Icons.timer),
                             onTap: () {
-                              // TODO: Show duration picker
                               showDialog<Duration>(
                                   context: context,
                                   builder: (BuildContext context) {
                                     return DurationPicker(
+                                      // Set the initial duration
                                         initDuration: _hiit.repRest,
                                         title: Text("Rest time between each rep",
                                             textAlign: TextAlign.center,
@@ -170,7 +171,7 @@ class _HiitScreenState extends State<HiitScreen> {
                                   }).then((repRestTime){
                                 // If null, don't do anything
                                 if (repRestTime == null) return;
-                                // Update the work time to reflect user input
+                                // Update the rest time between each rep to reflect user input
                                 _hiit.repRest = repRestTime;
                                 _onHiitChanged();
                               });
@@ -188,7 +189,26 @@ class _HiitScreenState extends State<HiitScreen> {
                             subtitle: Text('${_hiit.reps}'),
                             leading: Icon(Icons.repeat),
                             onTap: () {
-                              // TODO: Show duration picker
+                              showDialog<int>(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return NumberPickerDialog.integer(
+                                        minValue: 1,
+                                        maxValue: 10,
+                                        // Set the initial value
+                                        initialIntegerValue: _hiit.reps,
+                                        title: Text("Reps in each set",
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(fontSize: 18)
+                                        )
+                                    );
+                                  }).then((reps){
+                                // If null, don't do anything
+                                if (reps == null) return;
+                                // Update the number of reps to reflect user input
+                                _hiit.reps = reps;
+                                _onHiitChanged();
+                              });
                             },
                           ),
                           // Sets
@@ -203,7 +223,26 @@ class _HiitScreenState extends State<HiitScreen> {
                             subtitle: Text('${_hiit.sets}'),
                             leading: Icon(Icons.fitness_center),
                             onTap: () {
-                              // TODO: Show duration picker
+                              showDialog<int>(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return NumberPickerDialog.integer(
+                                        minValue: 1,
+                                        maxValue: 10,
+                                        // Set the initial value
+                                        initialIntegerValue: _hiit.sets,
+                                        title: Text("Sets in the workout",
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(fontSize: 18)
+                                        )
+                                    );
+                                  }).then((sets){
+                                // If null, don't do anything
+                                if (sets == null) return;
+                                // Update the number of sets to reflect user input
+                                _hiit.sets = sets;
+                                _onHiitChanged();
+                              });
                             },
                           ),
                           // Set Rest
@@ -218,11 +257,11 @@ class _HiitScreenState extends State<HiitScreen> {
                             subtitle: Text(_hiit.formatTime(_hiit.setRest)),
                             leading: Icon(Icons.timer),
                             onTap: () {
-                              // TODO: Show duration picker
                               showDialog<Duration>(
                                   context: context,
                                   builder: (BuildContext context) {
                                     return DurationPicker(
+                                      // Set the inital duration
                                         initDuration: _hiit.setRest,
                                         title: Text("Rest time between each set",
                                             textAlign: TextAlign.center,
@@ -232,7 +271,7 @@ class _HiitScreenState extends State<HiitScreen> {
                                   }).then((setRestTime){
                                 // If null, don't do anything
                                 if (setRestTime == null) return;
-                                // Update the work time to reflect user input
+                                // Update the rest time after each set to reflect user input
                                 _hiit.repRest = setRestTime;
                                 _onHiitChanged();
                               });
