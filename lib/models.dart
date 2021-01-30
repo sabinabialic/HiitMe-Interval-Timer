@@ -73,6 +73,7 @@ enum WorkoutState {
 
 class Workout {
   Hiit _hiit;
+  Timer _timer;
 
   // Callback for when the workout state is changed
   Function _onStateChanged;
@@ -98,6 +99,15 @@ class Workout {
   get timeRemaining => _timeRemaining;
   get totalTimeElapsed => _totalTimeElapsed;
 
+  _tick(Timer timer) {
+    if (_step != WorkoutState.starting) {
+      _totalTimeElapsed += Duration(seconds: 1);
+    }
+    if (_timeRemaining.inSeconds == 1) { _nextStep(); }
+    else { _timeRemaining -= Duration(seconds: 1); }
+    _onStateChanged();
+  }
+
   start() {
     // TODO: Function which starts or resumes the workout
     // Need to consider the current workout state
@@ -106,6 +116,7 @@ class Workout {
       if (_hiit.delayTime.inSeconds == 0) { _nextStep(); }
       else { _timeRemaining = _hiit.delayTime; }
     }
+    _timer = Timer.periodic(Duration(seconds: 1), _tick);
     _onStateChanged();
   }
 
