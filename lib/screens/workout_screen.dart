@@ -94,27 +94,34 @@ class _WorkoutScreenState extends State<WorkoutScreen>{
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Step",
-                      //workoutStage(_workout.step),
-                      style: TextStyle( fontSize: 60.0, color: Colors.white)
+                        workoutStage(_workout.step),
+                        style: TextStyle(
+                          fontSize: 58.0,
+                          fontFamily: "Raleway",
+                          color: Colors.white70
+                        )
                     )
                   ],
                 ),
                 // Divider
-                Divider (height: 30, color: Colors.white),
+                Divider (height: 50, color: Colors.white),
 
                 // Time remaining
                 Container (
-                  padding: EdgeInsets.only(bottom: 150),
+                  padding: EdgeInsets.only(bottom: 18),
                   width: double.infinity,
                   child: FittedBox(
                     child: Text(
-                        "TimeLeft",
-                        style: TextStyle(color: Colors.white)
+                        formatTime(_workout.timeRemaining),
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 60.0,
+                            fontFamily: "Open Sans"
+                        )
                     )
                   )),
                 // Divider
-                Divider (height: 30, color: Colors.white),
+                Divider (height: 50, color: Colors.white),
 
                 // This table shows more info about the workout
                 Table(
@@ -131,23 +138,29 @@ class _WorkoutScreenState extends State<WorkoutScreen>{
                       children: [
                         // Set
                         TableCell(
-                          child: Text("Set",
+                          child: Text("SET",
                           style: TextStyle(
-                            fontSize: 26.0, color: Colors.white),
+                              fontFamily: "Raleway",
+                              fontSize: 24.0,
+                              color: Colors.white70),
                           textAlign: TextAlign.center)
                         ),
                         // Rep
                         TableCell(
-                            child: Text("Rep",
+                            child: Text("REP",
                                 style: TextStyle(
-                                    fontSize: 26.0, color: Colors.white),
+                                    fontFamily: "Raleway",
+                                    fontSize: 24.0,
+                                    color: Colors.white70),
                                 textAlign: TextAlign.center)
                         ),
                         // Total Time
                         TableCell(
-                            child: Text("Total Time",
+                            child: Text("TIME ELAPSED",
                                 style: TextStyle(
-                                    fontSize: 26.0, color: Colors.white),
+                                    fontFamily: "Raleway",
+                                    fontSize: 22.0,
+                                    color: Colors.white70),
                                 textAlign: TextAlign.center)
                         ),
                       ]),

@@ -6,6 +6,7 @@ import 'package:interval_timer/screens/workout_screen.dart';
 import 'package:interval_timer/widgets/durationpicker.dart';
 import 'package:numberpicker/numberpicker.dart';
 
+import '../main.dart';
 import '../models.dart';
 
 class HiitScreen extends StatefulWidget {
@@ -34,7 +35,7 @@ class _HiitScreenState extends State<HiitScreen> {
       appBar: AppBar(
         title: Text(
           "Interval Timer",
-          style: TextStyle(fontFamily: "Roboto", fontSize: 28)
+          style: TextStyle(fontFamily: "Open Sans", fontSize: 28)
         ),
         elevation: defaultTargetPlatform == TargetPlatform.android ? 5.0 : 0.0,
         backgroundColor: Color(0xFFFFFF),
@@ -61,11 +62,11 @@ class _HiitScreenState extends State<HiitScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          Text(_hiit.formatTime(_hiit.getTotalTime()),
+                          Text(formatTime(_hiit.getTotalTime()),
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 80,
-                                  fontWeight: FontWeight.w600)),
+                                  fontFamily: "Open Sans")),
                         ],
                       ),
                       Row(
@@ -74,7 +75,6 @@ class _HiitScreenState extends State<HiitScreen> {
                           Padding(
                             padding: EdgeInsets.only(top: 50),
                             child: FloatingActionButton.extended(
-                              // TODO: Start the workout
                               onPressed: () {
                                 Navigator.push(
                                   context,
@@ -90,7 +90,7 @@ class _HiitScreenState extends State<HiitScreen> {
                               label: Text(
                                   "Start Workout",
                                   style: TextStyle(
-                                      fontFamily: "Roboto",
+                                      fontFamily: "Open Sans",
                                       fontSize: 16
                                   )
                               ),
@@ -110,7 +110,7 @@ class _HiitScreenState extends State<HiitScreen> {
                             topLeft: Radius.circular(60),
                             topRight: Radius.circular(60))),
                     child: Padding(
-                      padding: EdgeInsets.fromLTRB(40, 50, 40, 50),
+                      padding: EdgeInsets.fromLTRB(40, 40, 40, 40),
                       child: SingleChildScrollView(
                         child: Column(children: <Widget>[
                           // Exercise Time
