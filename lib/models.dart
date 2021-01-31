@@ -1,4 +1,6 @@
 // Default values for the timer
+import 'dart:async';
+
 Hiit get defaultHiit => Hiit(
   reps: 3,
   workTime: Duration(seconds: 60),
@@ -98,6 +100,7 @@ class Workout {
   get step => _step;
   get timeRemaining => _timeRemaining;
   get totalTimeElapsed => _totalTimeElapsed;
+  get isActive => _timer != null && _timer.isActive;
 
   _tick(Timer timer) {
     if (_step != WorkoutState.starting) {
@@ -108,8 +111,8 @@ class Workout {
     _onStateChanged();
   }
 
+  // Starts or resumes the workout
   start() {
-    // TODO: Function which starts or resumes the workout
     // Need to consider the current workout state
     if (_step == WorkoutState.initial) {
       _step = WorkoutState.starting;
@@ -120,20 +123,27 @@ class Workout {
     _onStateChanged();
   }
 
+  // Pauses the workout
   pause() {
-    // TODO: Function which pauses the workout
+    _timer.cancel();
     _onStateChanged();
   }
 
+  // Stops the timer and sets the workout state to finished
+  // and time remaining to 0
   stop() {
-    // TODO: Function which stops the workout
-    throw UnimplementedError();
+    _timer.cancel();
+    _step = WorkoutState.finished;
+    _timeRemaining = Duration(seconds: 0);
   }
 
+  // Stops the timer without changing the current state
+  dispose() { _timer.cancel(); }
+
+  // Moves the workout to the next step
   _nextStep() {
-    // TODO: Function which moves the workout to the next step
     // Need to consider the current state of the workout
-    if (_step != WorkoutState.exercising) {
+    if (_step == WorkoutState.exercising) {
       if (rep == _hiit.reps) {
         if (set == _hiit.sets) { _finish(); }
         else {_startSetRest(); }
@@ -141,36 +151,58 @@ class Workout {
       else { _startRepRest(); }
     }
     else if (_step == WorkoutState.repResting) { _startRep(); }
-    else if (_step == WorkoutState.setResting ||
-        _step == WorkoutState.starting) {
+    else if (_step == WorkoutState.starting ||
+        _step == WorkoutState.setResting) {
       _startSet();
     }
   }
 
+  // Starts the current rep by increasing the rep counter, setting the current
+  // workout state to exercising, and time remaining to the current work time
   _startRep() {
-    // TODO: Function which starts a new rep for the workout
-    throw UnimplementedError();
+    _rep++;
+    _step = WorkoutState.exercising;
+    _timeRemaining = _hiit.workTime;
   }
 
+  // Starts the timer for the rep rest by setting the current workout state to
+  // rep resting and once the time left in rep rest reaches 0, moves on to the
+  // next step of the workout
   _startRepRest() {
-    // TODO: Function which starts a rest state for the current rep of the workout
-    throw UnimplementedError();
+    _step = WorkoutState.repResting;
+    // If the time remaining in the rep rest is 0, move on to the next step
+    if (_hiit.repRest.inSeconds == 0) {
+      _nextStep();
+      return;
+    }
+    _timeRemaining = _hiit.repRest;
   }
 
+  // Starts the current set by increasing the set counter, setting the rep to
+  // 1 since it's the first rep in the set, setting the current workout state
+  // to exercising, and time remaining to the current work time
   _startSet() {
-    // TODO: Function which starts a new set for the workout
-    throw UnimplementedError();
+    _set++;
+    _rep = 1;
+    _step = WorkoutState.exercising;
+    _timeRemaining = _hiit.workTime;
   }
 
   _startSetRest() {
-    // TODO: Function which starts a rest state for the current set of the workout
-    throw UnimplementedError();
+    _step = WorkoutState.setResting;
+    // If the time remaining in the rep rest is 0, move on to the next step
+    if (_hiit.setRest.inSeconds == 0) {
+      _nextStep();
+      return;
+    }
+    _timeRemaining = _hiit.setRest;
   }
 
   _finish() {
-    // TODO: Function which sets the state of the workout to finished
     // Cancel the timer
-    // Push a notification
-    throw UnimplementedError();
+    _timer.cancel();
+    _step = WorkoutState.finished;
+    _timeRemaining = Duration(seconds: 0);
+    // TODO: Push notification
   }
 }
