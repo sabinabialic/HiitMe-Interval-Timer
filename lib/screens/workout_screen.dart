@@ -63,13 +63,7 @@ class _WorkoutScreenState extends State<WorkoutScreen>{
       case WorkoutState.exercising: return Colors.lightGreen;
       case WorkoutState.repResting: return Colors.blueAccent;
       case WorkoutState.setResting: return Colors.pink;
-      default: return BoxDecoration(
-        gradient: LinearGradient(
-          colors: <Color>[Colors.purple, Colors.indigo],
-          begin: FractionalOffset.topLeft,
-          end: FractionalOffset.bottomRight
-        )
-      );
+      default: return theme.backgroundColor;
     }
   }
 
@@ -83,8 +77,8 @@ class _WorkoutScreenState extends State<WorkoutScreen>{
         children: <Widget> [
           Container(
             // Background of the screen
-            decoration: _backgroundColour(theme),
-            padding: EdgeInsets.symmetric(horizontal: 30),
+            decoration: _getDecoration(theme),
+            padding: EdgeInsets.symmetric(horizontal: 20),
             child: Column(
               children: <Widget>[
                 Expanded(child: Row()),
@@ -191,9 +185,7 @@ class _WorkoutScreenState extends State<WorkoutScreen>{
                         ]),
                   ],
                 ),
-                // TODO - Implement
-                //Expanded (child: _buttonBar())
-                Divider(height: 200)
+                Expanded (child: _buttonBar())
               ],
             )
           )
@@ -201,10 +193,57 @@ class _WorkoutScreenState extends State<WorkoutScreen>{
       )
     );
   }
+  
+  // Sets the background color(s) of the screen
+  _getDecoration(ThemeData theme) {
+    // When the workout step is initial, starting, or finished fill the background
+    // with a gradient
+    if (_workout.step == WorkoutState.initial ||
+        _workout.step == WorkoutState.starting ||
+        _workout.step == WorkoutState.finished) {
+      return BoxDecoration(
+          gradient: LinearGradient(
+              colors: <Color>[Colors.purple, Colors.indigo],
+              begin: FractionalOffset.topLeft,
+              end: FractionalOffset.bottomRight
+          )
+      );
+
+      // Otherwise, the colour of the background should be a solid colour
+    } else { return BoxDecoration(color: _backgroundColour(theme)); }
+  }
 
   // Start/Pause button bar
   Widget _buttonBar() {
-    // TODO - Create a button bar
-    throw UnimplementedError();
+    // On finished, show a button to go back to main screen
+    if (_workout.step == WorkoutState.finished) {
+      return FlatButton(
+        padding: EdgeInsets.all(10),
+        // When pressed, pop the current screen
+        onPressed: () => Navigator.pop(context),
+        child: Align(
+          alignment: Alignment.center,
+          // Icon on the button
+          child: Icon(
+              Icons.home,
+              size: 100,
+              color: Colors.white70
+          )
+        )
+      );
+    } else {
+      return FlatButton(
+        padding: EdgeInsets.all(10),
+        onPressed: _workout.isActive? _pause : _start,
+        child: Align(
+          alignment: Alignment.center,
+          child: Icon(_workout.isActive ?
+              Icons.pause_circle_filled : Icons.play_circle_filled,
+              size: 100,
+              color: Colors.white70
+          )
+        )
+      );
+    }
   }
 }
