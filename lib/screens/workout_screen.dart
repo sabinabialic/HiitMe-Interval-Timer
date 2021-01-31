@@ -163,23 +163,23 @@ class _WorkoutScreenState extends State<WorkoutScreen>{
                         children: [
                           // Set
                           TableCell(
-                              child: Text("1",
+                              child: Text('${_workout.set}',
                                   style: TextStyle(
-                                      fontSize: 26.0, color: Colors.white),
+                                      fontSize: 52.0, color: Colors.white),
                                   textAlign: TextAlign.center)
                           ),
                           // Rep
                           TableCell(
-                              child: Text("2",
+                              child: Text('${_workout.rep}',
                                   style: TextStyle(
-                                      fontSize: 26.0, color: Colors.white),
+                                      fontSize: 52.0, color: Colors.white),
                                   textAlign: TextAlign.center)
                           ),
                           // Total Time
                           TableCell(
-                              child: Text("1:45",
+                              child: Text(formatTime(_workout.totalTimeElapsed),
                                   style: TextStyle(
-                                      fontSize: 26.0, color: Colors.white),
+                                      fontSize: 52.0, color: Colors.white),
                                   textAlign: TextAlign.center)
                           ),
                         ]),

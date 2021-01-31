@@ -37,13 +37,6 @@ class Hiit{
     return (workTime * reps * sets) + (repRest * sets * (reps-1)) + (setRest * (sets-1));
   }
 
-  // Function to format the time
-  String formatTime(Duration duration) {
-    String minutes = (duration.inMinutes).toString().padLeft(2, '0');
-    String seconds = (duration.inSeconds % 60).toString().padLeft(2, '0');
-    return '$minutes:$seconds';
-  }
-
   Hiit.fromJson(Map<String, dynamic> json) :
         reps = json['reps'],
         workTime = Duration(seconds: json['workTime']),

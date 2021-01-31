@@ -122,7 +122,7 @@ class _HiitScreenState extends State<HiitScreen> {
                                     fontWeight: FontWeight.w500
                                 )
                             ),
-                            subtitle: Text(_hiit.formatTime(_hiit.workTime)),
+                            subtitle: Text(formatTime(_hiit.workTime)),
                             leading: Icon(Icons.timer),
                             onTap: () {
                               showDialog<Duration>(
@@ -154,7 +154,7 @@ class _HiitScreenState extends State<HiitScreen> {
                                     fontWeight: FontWeight.w500
                                 )
                             ),
-                            subtitle: Text(_hiit.formatTime(_hiit.repRest)),
+                            subtitle: Text(formatTime(_hiit.repRest)),
                             leading: Icon(Icons.timer),
                             onTap: () {
                               showDialog<Duration>(
@@ -254,7 +254,7 @@ class _HiitScreenState extends State<HiitScreen> {
                                     fontWeight: FontWeight.w500
                                 )
                             ),
-                            subtitle: Text(_hiit.formatTime(_hiit.setRest)),
+                            subtitle: Text(formatTime(_hiit.setRest)),
                             leading: Icon(Icons.timer),
                             onTap: () {
                               showDialog<Duration>(
