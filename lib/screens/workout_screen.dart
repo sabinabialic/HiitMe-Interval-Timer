@@ -7,11 +7,11 @@ import '../models.dart';
 // All the possible states of the timer
 String workoutStage (WorkoutState step) {
   switch (step) {
-    case WorkoutState.starting: return "Starting";
-    case WorkoutState.exercising: return "Exercise";
-    case WorkoutState.repResting: return "Rep Rest";
-    case WorkoutState.setResting: return "Set Rest";
-    case WorkoutState.finished: return "Finished";
+    case WorkoutState.starting: return "STARTING";
+    case WorkoutState.exercising: return "EXERCISE";
+    case WorkoutState.repResting: return "REP REST";
+    case WorkoutState.setResting: return "SET REST";
+    case WorkoutState.finished: return "FINISHED";
     default: return "";
   }
 }
@@ -32,11 +32,10 @@ class _WorkoutScreenState extends State<WorkoutScreen>{
   initState() {
     super.initState();
     _workout = Workout(widget.hiit, _onWorkoutChanged);
-    // TODO - Start the timer
-    //_start();
+    _start();
   }
 
-  //
+  // Callback for when the workout state changes
   _onWorkoutChanged() {
     this.setState(() {});
   }
@@ -44,7 +43,7 @@ class _WorkoutScreenState extends State<WorkoutScreen>{
   // Dispose of the state of the workout
   @override
   disposeState() {
-    // TODO: implement disposeState
+    _workout.dispose();
     super.dispose();
   }
 
