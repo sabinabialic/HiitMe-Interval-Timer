@@ -1,8 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:interval_timer/screens/hiit_screen.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
 
 void main() async{
   // TODO: Initialize notification settings
+  WidgetsFlutterBinding.ensureInitialized();
+
+  const AndroidInitializationSettings initializationSettingsAndroid =
+      AndroidInitializationSettings("app_icon");
+
+  final IOSInitializationSettings initializationSettingsIOS =
+      IOSInitializationSettings(
+        requestSoundPermission: true,
+        requestBadgePermission: true,
+        requestAlertPermission: true,
+        onDidReceiveLocalNotification:
+        (int id, String title, String body, String payload) async{});
+
+  final InitializationSettings initializationSettings = InitializationSettings(
+    android: initializationSettingsAndroid,
+    iOS: initializationSettingsIOS);
+
+  await flutterLocalNotificationsPlugin.initialize(
+    initializationSettings,
+    onSelectNotification: (String payload) async {
+      if (payload != null) {
+        debugPrint("Notification Payload : $payload");
+      }
+    }
+  );
 
   runApp(HiitApp());
 }

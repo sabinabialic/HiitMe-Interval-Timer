@@ -1,6 +1,9 @@
-// Default values for the timer
 import 'dart:async';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
+import 'main.dart';
+
+// Default values for the timer
 Hiit get defaultHiit => Hiit(
   reps: 3,
   workTime: Duration(seconds: 60),
@@ -198,4 +201,27 @@ class Workout {
     _timeRemaining = Duration(seconds: 0);
     // TODO: Push notification
   }
+
+  // TODO: Function to push notification on completion of the workout
+  void _showNotification() async {
+    var androidDetails = new AndroidNotificationDetails(
+        "channelId",
+        "channelName",
+        "channelDescription",
+        importance: Importance.max,
+        priority: Priority.high,
+        ticker: "ticker"
+    );
+
+    var iosDetails = new IOSNotificationDetails();
+
+    var generalNotificationDetails = new NotificationDetails(
+      android: androidDetails, iOS: iosDetails);
+
+    await flutterLocalNotificationsPlugin.show(
+      0, "HIIT Timer", "Workout Complete!", generalNotificationDetails
+    );
+
+  }
+
 }
