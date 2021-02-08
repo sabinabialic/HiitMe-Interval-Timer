@@ -17,7 +17,7 @@ dependencies:
   flutter_colorpicker: ^0.3.4
   numberpicker: ^1.3.0
   audioplayers: ^0.17.0
-  shared_preferences: ^0.5.12+4
+  sound_mode: ^0.2.2
   flutter_local_notifications: ^3.0.2
   flutter_launcher_icons: "^0.8.1"
 
@@ -26,7 +26,7 @@ dev_dependencies:
     sdk: flutter
 
 flutter_icons:
-  image_path: "lib/assets/images/icon.png"
+  image_path: "assets/images/icon.png"
   android: true
   ios: true
 
@@ -42,21 +42,22 @@ flutter:
   # https://flutter.dev/assets-and-images/#resolution-aware.
 
   assets:
-    - lib/assets/sounds/chime.mp3
-    - lib/assets/sounds/positive_tone.mp3
-    - lib/assets/sounds/alert_notification.mp3
+    - assets/chime.mp3
+    - assets/alert_notification.mp3
+    - assets/positive_tone_1.mp3
+    - assets/positive_tone_2.mp3
 
   fonts:
     - family: Roboto
       fonts:
-        - asset: lib/assets/fonts/Roboto/Roboto-Regular.ttf
+        - asset: assets/fonts/Roboto/Roboto-Regular.ttf
           weight: 400
     - family: Raleway
       fonts:
-        - asset: lib/assets/fonts/Raleway/Raleway-Regular.ttf
-        - asset: lib/assets/fonts/Raleway/Raleway-Medium.ttf
+        - asset: assets/fonts/Raleway/Raleway-Regular.ttf
+        - asset: assets/fonts/Raleway/Raleway-Medium.ttf
           weight: 500
     - family: Open Sans
       fonts:
-        - asset: lib/assets/fonts/OpenSans/OpenSans-Regular.ttf
+        - asset: assets/fonts/OpenSans/OpenSans-Regular.ttf
           weight: 400

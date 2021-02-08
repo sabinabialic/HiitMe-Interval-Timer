@@ -1,11 +1,10 @@
 import 'dart:async';
-import 'dart:convert';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:audioplayers/audio_cache.dart';
+import 'package:sound_mode/sound_mode.dart';
 import 'main.dart';
 
-var player = AudioCache();
+AudioCache player = AudioCache();
 
 // Default values for the timer
 Hiit get defaultHiit => Hiit(
@@ -77,6 +76,12 @@ class Workout {
   Hiit _hiit;
   Timer _timer;
 
+  // Sounds which will be used during the workout
+  String countdownSound = "chime.mp3";
+  String restSound = "alert_notification.mp3";
+  String endSound = "positive_tone_1.mp3";
+  String startSound = "positive_tone_2.mp3";
+
   // Callback for when the workout state is changed
   Function _onStateChanged;
   WorkoutState _step = WorkoutState.initial;
@@ -106,8 +111,17 @@ class Workout {
     if (_step != WorkoutState.starting) {
       _totalTimeElapsed += Duration(seconds: 1);
     }
-    if (_timeRemaining.inSeconds == 1) { _nextStep(); }
-    else { _timeRemaining -= Duration(seconds: 1); }
+    if (_timeRemaining.inSeconds == 1) {
+      _nextStep();
+    }
+    else {
+      _timeRemaining -= Duration(seconds: 1);
+
+      // Play a countdown before the workout starts
+      if (_timeRemaining.inSeconds <= 3 && _step == WorkoutState.starting) {
+        _playSound(countdownSound);
+      }
+    }
     _onStateChanged();
   }
 
@@ -115,9 +129,15 @@ class Workout {
   start() {
     // Need to consider the current workout state
     if (_step == WorkoutState.initial) {
+      _playSound(countdownSound);
       _step = WorkoutState.starting;
-      if (_hiit.delayTime.inSeconds == 0) { _nextStep(); }
-      else { _timeRemaining = _hiit.delayTime; }
+
+      if (_hiit.delayTime.inSeconds == 0) {
+        _nextStep();
+      }
+      else {
+        _timeRemaining = _hiit.delayTime;
+      }
     }
     _timer = Timer.periodic(Duration(seconds: 1), _tick);
     _onStateChanged();
@@ -163,6 +183,7 @@ class Workout {
     _rep++;
     _step = WorkoutState.exercising;
     _timeRemaining = _hiit.workTime;
+    _playSound(startSound);
   }
 
   // Starts the timer for the rep rest by setting the current workout state to
@@ -175,6 +196,7 @@ class Workout {
       _nextStep();
       return;
     }
+    _playSound(restSound);
     _timeRemaining = _hiit.repRest;
   }
 
@@ -186,6 +208,7 @@ class Workout {
     _rep = 1;
     _step = WorkoutState.exercising;
     _timeRemaining = _hiit.workTime;
+    _playSound(startSound);
   }
 
   _startSetRest() {
@@ -195,6 +218,7 @@ class Workout {
       _nextStep();
       return;
     }
+    _playSound(restSound);
     _timeRemaining = _hiit.setRest;
   }
 
@@ -203,13 +227,17 @@ class Workout {
     _timer.cancel();
     _step = WorkoutState.finished;
     _timeRemaining = Duration(seconds: 0);
+    _playSound(endSound);
     // TODO: Push notification
   }
 
-  // TODO: Play sound
-  Future _playSound(String sound) {
-    // Check if the user has silent mode enabled on their phone
-    throw UnimplementedError();
+  // Function to play a sound
+  Future _playSound(String sound) async {
+    String ringerStatus = await SoundMode.ringerModeStatus;
+    if (ringerStatus.contains("Normal Mode")) {
+      return await player.play(sound);
+    }
+    return Future;
   }
 
   void _showNotification() async {
