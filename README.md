@@ -1,3 +1,8 @@
+<p align="center">
+  <img src="lib/assets/images/icon.png" width=45% title="Interval Timer App Icon"
+  alt="Interval Timer App Icon">
+</p>
+
 # Interval Timer Flutter App
 
 A interval training timer written with Flutter for which is compatible with iOS and Android devices. This app was was built for my Honours Project at Carleton University during the Winter 2021 semester, supervised by Professor Louis Nel.
