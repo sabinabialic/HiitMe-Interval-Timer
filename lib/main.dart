@@ -40,7 +40,7 @@ class HiitApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'HIIT Timer',
+      title: 'Interval Timer',
       home: HiitScreen(),
     );
   }
