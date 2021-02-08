@@ -21,3 +21,6 @@ The user is able to customize the following aspects of the timer...
 - Rest time between each rep
 - Number of sets in the workout
 - Rest time between each set
+
+## Acknoledgements
+- Sounds optained from [ZapSplat](https://www.zapsplat.com/)
