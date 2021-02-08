@@ -1,7 +1,11 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:audioplayers/audio_cache.dart';
 import 'main.dart';
+
+var player = AudioCache();
 
 // Default values for the timer
 Hiit get defaultHiit => Hiit(
@@ -202,7 +206,12 @@ class Workout {
     // TODO: Push notification
   }
 
-  // TODO: Function to push notification on completion of the workout
+  // TODO: Play sound
+  Future _playSound(String sound) {
+    // Check if the user has silent mode enabled on their phone
+    throw UnimplementedError();
+  }
+
   void _showNotification() async {
     var androidDetails = new AndroidNotificationDetails(
         "channelId",
@@ -221,7 +230,6 @@ class Workout {
     await flutterLocalNotificationsPlugin.show(
       0, "HIIT Timer", "Workout Complete!", generalNotificationDetails
     );
-
   }
 
 }
