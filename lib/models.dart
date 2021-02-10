@@ -225,10 +225,10 @@ class Workout {
   _finish() {
     // Cancel the timer
     _timer.cancel();
+    _showNotification();
     _step = WorkoutState.finished;
     _timeRemaining = Duration(seconds: 0);
     _playSound(endSound);
-    // TODO: Push notification
   }
 
   // Function to play a sound
@@ -242,12 +242,9 @@ class Workout {
 
   void _showNotification() async {
     var androidDetails = new AndroidNotificationDetails(
-        "channelId",
-        "channelName",
-        "channelDescription",
+        "channelId", "channelName", "channelDescription",
         importance: Importance.max,
         priority: Priority.high,
-        ticker: "ticker"
     );
 
     var iosDetails = new IOSNotificationDetails();
@@ -256,7 +253,7 @@ class Workout {
       android: androidDetails, iOS: iosDetails);
 
     await flutterLocalNotificationsPlugin.show(
-      0, "HIIT Timer", "Workout Complete!", generalNotificationDetails
+      0, "Interval Timer", "Workout Complete!", generalNotificationDetails
     );
   }
 

@@ -6,11 +6,11 @@ final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
 
 void main() async{
-  // TODO: Initialize notification settings
+  // Initialize notification settings
   WidgetsFlutterBinding.ensureInitialized();
 
   const AndroidInitializationSettings initializationSettingsAndroid =
-      AndroidInitializationSettings("app_icon");
+      AndroidInitializationSettings("@mipmap/ic_launcher");
 
   final IOSInitializationSettings initializationSettingsIOS =
       IOSInitializationSettings(
