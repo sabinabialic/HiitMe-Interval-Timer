@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="lib/assets/images/icon.png" width=45% title="Interval Timer App Icon"
+  <img src="assets/images/icon.png" width=45% title="Interval Timer App Icon"
   alt="Interval Timer App Icon">
 </p>
 
@@ -22,5 +22,5 @@ The user is able to customize the following aspects of the timer...
 - Number of sets in the workout
 - Rest time between each set
 
-## Acknoledgements
-- Sounds optained from [ZapSplat](https://www.zapsplat.com/)
+## Acknowledgements
+- Sounds obtained from [ZapSplat](https://www.zapsplat.com/)
