@@ -239,6 +239,10 @@ class _HiitScreenState extends State<HiitScreen> {
                                   }).then((sets){
                                 // If null, don't do anything
                                 if (sets == null) return;
+                                // If there is only 1 set in the workout, set the set rest time to 0
+                                if (sets == 1) {
+                                  _hiit.setRest = Duration(seconds: 0);
+                                }
                                 // Update the number of sets to reflect user input
                                 _hiit.sets = sets;
                                 _onHiitChanged();

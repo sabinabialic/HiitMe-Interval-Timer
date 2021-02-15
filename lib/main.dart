@@ -9,6 +9,7 @@ void main() async{
   // Initialize notification settings
   WidgetsFlutterBinding.ensureInitialized();
 
+  // Android app icon
   const AndroidInitializationSettings initializationSettingsAndroid =
       AndroidInitializationSettings("@mipmap/ic_launcher");
 
