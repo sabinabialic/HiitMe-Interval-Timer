@@ -82,7 +82,7 @@ class _WorkoutScreenState extends State<WorkoutScreen>{
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: Column(
               children: <Widget>[
-                Expanded(child: Row()),
+                Expanded(child: Divider()),
                 // This row contains the name of the stage of the workout
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
