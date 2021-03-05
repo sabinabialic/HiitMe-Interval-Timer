@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:interval_timer/screens/hiit_screen.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
@@ -34,7 +35,10 @@ void main() async{
     }
   );
 
-  runApp(HiitApp());
+  // Ensure portrait orientation is locked
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((value) => runApp(HiitApp()));
 }
 
 class HiitApp extends StatelessWidget {
@@ -43,6 +47,7 @@ class HiitApp extends StatelessWidget {
     return MaterialApp(
       title: 'Interval Timer',
       home: HiitScreen(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
