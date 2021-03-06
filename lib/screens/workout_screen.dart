@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-
 import '../main.dart';
 import '../models.dart';
 
@@ -20,7 +18,6 @@ String workoutStage (WorkoutState step) {
 class WorkoutScreen extends StatefulWidget{
   final Hiit hiit;
   WorkoutScreen({this.hiit});
-
   @override
   State<StatefulWidget> createState() => _WorkoutScreenState();
 }
@@ -37,9 +34,7 @@ class _WorkoutScreenState extends State<WorkoutScreen>{
   }
 
   // Callback for when the workout state changes
-  _onWorkoutChanged() {
-    this.setState(() {});
-  }
+  _onWorkoutChanged() { this.setState(() {}); }
 
   // Dispose of the state of the workout
   @override
@@ -49,14 +44,10 @@ class _WorkoutScreenState extends State<WorkoutScreen>{
   }
 
   // Start the workout
-  _start() {
-    _workout.start();
-  }
+  _start() { _workout.start(); }
 
   // Pause the workout
-  _pause() {
-    _workout.pause();
-  }
+  _pause() { _workout.pause(); }
 
   // Change the background of the screen depending on the workout state
   _backgroundColour(ThemeData theme) {

@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 // Widget obtained from https://pub.dev/packages/numberpicker
 import 'package:numberpicker/numberpicker.dart';
 
@@ -15,8 +14,8 @@ class DurationPicker extends StatefulWidget {
     this.title,
     Widget confirmWidget,
     Widget cancelWidget
-  }) : confirmWidget = confirmWidget ?? new Text('Ok'),
-        cancelWidget = cancelWidget ?? new Text('Cancel');
+  }) : confirmWidget = confirmWidget ?? new Text('OK'),
+        cancelWidget = cancelWidget ?? new Text('CANCEL');
 
   @override
   State<StatefulWidget> createState() => new _DurationPickerState(initDuration);
@@ -73,8 +72,7 @@ class _DurationPickerState extends State<DurationPicker> {
                 new Duration(
                     minutes: min,
                     seconds: sec)
-            ),
-            child: widget.confirmWidget)
+            ), child: widget.confirmWidget)
       ],
     );
   }

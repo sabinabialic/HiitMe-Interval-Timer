@@ -111,12 +111,9 @@ class Workout {
     if (_step != WorkoutState.starting) {
       _totalTimeElapsed += Duration(seconds: 1);
     }
-    if (_timeRemaining.inSeconds == 1) {
-      _nextStep();
-    }
+    if (_timeRemaining.inSeconds == 1) {_nextStep();}
     else {
       _timeRemaining -= Duration(seconds: 1);
-
       // Play a countdown before the workout starts
       if (_timeRemaining.inSeconds <= 3 && _step == WorkoutState.starting) {
         _playSound(countdownSound);
@@ -132,12 +129,8 @@ class Workout {
       _playSound(countdownSound);
       _step = WorkoutState.starting;
 
-      if (_hiit.delayTime.inSeconds == 0) {
-        _nextStep();
-      }
-      else {
-        _timeRemaining = _hiit.delayTime;
-      }
+      if (_hiit.delayTime.inSeconds == 0) {_nextStep();}
+      else {_timeRemaining = _hiit.delayTime;}
     }
     _timer = Timer.periodic(Duration(seconds: 1), _tick);
     _onStateChanged();
@@ -171,8 +164,8 @@ class Workout {
       else { _startRepRest(); }
     }
     else if (_step == WorkoutState.repResting) { _startRep(); }
-    else if (_step == WorkoutState.starting ||
-        _step == WorkoutState.setResting) {
+    else if (_step == WorkoutState.starting
+        ||_step == WorkoutState.setResting) {
       _startSet();
     }
   }
@@ -234,10 +227,9 @@ class Workout {
   // Function to play a sound
   Future _playSound(String sound) async {
     String ringerStatus = await SoundMode.ringerModeStatus;
-    if (ringerStatus.contains("Normal Mode")) {
+    if (ringerStatus == "Normal Mode") {
       return await player.play(sound);
-    }
-    return Future;
+    } else return;
   }
 
   void _showNotification() async {

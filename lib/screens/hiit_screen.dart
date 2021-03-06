@@ -24,9 +24,7 @@ class _HiitScreenState extends State<HiitScreen> {
   }
 
   // Callback for when the duration changes
-  _onHiitChanged() {
-    setState(() {});
-  }
+  _onHiitChanged() { setState(() {}); }
 
   @override
   Widget build(BuildContext context) {
@@ -77,13 +75,10 @@ class _HiitScreenState extends State<HiitScreen> {
                             child: FloatingActionButton.extended(
                               onPressed: () {
                                 Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
+                                  context, MaterialPageRoute(
                                     builder: (context) => WorkoutScreen(
-                                      hiit: _hiit
-                                    ))
-                                );
-                              },
+                                        hiit: _hiit
+                                    )));},
                               backgroundColor: Colors.black45,
                               splashColor: Colors.deepPurple[800],
                               icon: Icon(Icons.play_arrow),
@@ -265,7 +260,7 @@ class _HiitScreenState extends State<HiitScreen> {
                                   context: context,
                                   builder: (BuildContext context) {
                                     return DurationPicker(
-                                      // Set the inital duration
+                                      // Set the initial duration
                                         initDuration: _hiit.setRest,
                                         title: Text("Rest time between each set",
                                             textAlign: TextAlign.center,
@@ -283,8 +278,7 @@ class _HiitScreenState extends State<HiitScreen> {
                           ),
                         ]),
                       ),
-                    ),
-                    width: double.infinity,
+                    ), width: double.infinity,
                   ),
                 ),
               ],
