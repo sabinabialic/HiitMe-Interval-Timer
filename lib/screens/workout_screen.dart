@@ -73,7 +73,7 @@ class _WorkoutScreenState extends State<WorkoutScreen>{
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: Column(
               children: <Widget>[
-                Expanded(child: Divider()),
+                Expanded(child: Row()),
                 // This row contains the name of the stage of the workout
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -200,7 +200,6 @@ class _WorkoutScreenState extends State<WorkoutScreen>{
               end: FractionalOffset.bottomRight
           )
       );
-
       // Otherwise, the colour of the background should be a solid colour
     } else { return BoxDecoration(color: _backgroundColour(theme)); }
   }
@@ -209,31 +208,24 @@ class _WorkoutScreenState extends State<WorkoutScreen>{
   Widget _buttonBar() {
     // On finished, show a button to go back to main screen
     if (_workout.step == WorkoutState.finished) {
-      return FlatButton(
+      return IconButton(
         padding: EdgeInsets.all(10),
+        iconSize: 100,
         // When pressed, pop the current screen
         onPressed: () => Navigator.pop(context),
-        child: Align(
-          alignment: Alignment.center,
-          // Icon on the button
-          child: Icon(
-              Icons.home,
-              size: 100,
-              color: Colors.white70
-          )
-        )
+        // Icon on the button
+        icon: Icon(Icons.home, color: Colors.white70)
       );
     } else {
-      return FlatButton(
+      return IconButton(
         padding: EdgeInsets.all(10),
+        iconSize: 100,
         onPressed: _workout.isActive? _pause : _start,
-        child: Align(
-          alignment: Alignment.center,
-          child: Icon(_workout.isActive ?
-              Icons.pause_circle_filled : Icons.play_circle_filled,
-              size: 100,
-              color: Colors.white70
-          )
+        // Icon on the button depends on if the workout is active or not
+        icon: Icon(_workout.isActive ?
+            // If active pause icon, if inactive play icon
+            Icons.pause_circle_filled : Icons.play_circle_filled,
+            color: Colors.white70
         )
       );
     }
