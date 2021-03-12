@@ -33,7 +33,7 @@ class _HiitScreenState extends State<HiitScreen> {
       appBar: AppBar(
         title: Text(
           "Interval Timer",
-          style: TextStyle(fontFamily: "Open Sans", fontSize: 28)
+          style: TextStyle(fontFamily: "Open Sans", fontSize: 23)
         ),
         elevation: defaultTargetPlatform == TargetPlatform.android ? 5.0 : 0.0,
         backgroundColor: Color(0xFFFFFF),
@@ -54,7 +54,7 @@ class _HiitScreenState extends State<HiitScreen> {
             child: Column(
               children: <Widget>[
                 Padding(
-                  padding: EdgeInsets.fromLTRB(20, 150, 20, 50),
+                  padding: EdgeInsets.fromLTRB(20, 140, 20, 60),
                   child: Column(
                     children: <Widget>[
                       Row(
@@ -63,7 +63,7 @@ class _HiitScreenState extends State<HiitScreen> {
                           Text(formatTime(_hiit.getTotalTime()),
                               style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 80,
+                                  fontSize: 90,
                                   fontFamily: "Open Sans")),
                         ],
                       ),
@@ -86,7 +86,7 @@ class _HiitScreenState extends State<HiitScreen> {
                                   "Start Workout",
                                   style: TextStyle(
                                       fontFamily: "Open Sans",
-                                      fontSize: 16
+                                      fontSize: 20
                                   )
                               ),
                             ),
@@ -114,9 +114,8 @@ class _HiitScreenState extends State<HiitScreen> {
                                 "Exercise Time",
                                 style: TextStyle(
                                     fontFamily: "Raleway",
-                                    fontWeight: FontWeight.w500
-                                )
-                            ),
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w500)),
                             subtitle: Text(formatTime(_hiit.workTime)),
                             leading: Icon(Icons.timer),
                             onTap: () {
@@ -128,8 +127,10 @@ class _HiitScreenState extends State<HiitScreen> {
                                     initDuration: _hiit.workTime,
                                     title: Text("Exercise time for each rep",
                                       textAlign: TextAlign.center,
-                                        style: TextStyle(fontSize: 16)
-                                    )
+                                        style: TextStyle(
+                                            fontFamily: "Raleway",
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w500))
                                   );
                                 }).then((workTime){
                                 // If null, don't do anything
@@ -146,9 +147,8 @@ class _HiitScreenState extends State<HiitScreen> {
                               "Rest Time",
                                 style: TextStyle(
                                     fontFamily: "Raleway",
-                                    fontWeight: FontWeight.w500
-                                )
-                            ),
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w500)),
                             subtitle: Text(formatTime(_hiit.repRest)),
                             leading: Icon(Icons.timer),
                             onTap: () {
@@ -160,8 +160,10 @@ class _HiitScreenState extends State<HiitScreen> {
                                         initDuration: _hiit.repRest,
                                         title: Text("Rest time between each rep",
                                             textAlign: TextAlign.center,
-                                            style: TextStyle(fontSize: 16)
-                                        )
+                                            style: TextStyle(
+                                                fontFamily: "Raleway",
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w500))
                                     );
                                   }).then((repRestTime){
                                 // If null, don't do anything
@@ -178,9 +180,8 @@ class _HiitScreenState extends State<HiitScreen> {
                                 "Reps",
                                 style: TextStyle(
                                     fontFamily: "Raleway",
-                                    fontWeight: FontWeight.w500
-                                )
-                            ),
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w500)),
                             subtitle: Text('${_hiit.reps}'),
                             leading: Icon(Icons.repeat),
                             onTap: () {
@@ -194,8 +195,10 @@ class _HiitScreenState extends State<HiitScreen> {
                                         initialIntegerValue: _hiit.reps,
                                         title: Text("Reps in each set",
                                             textAlign: TextAlign.center,
-                                            style: TextStyle(fontSize: 18)
-                                        )
+                                            style: TextStyle(
+                                                fontFamily: "Raleway",
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w500))
                                     );
                                   }).then((reps){
                                 // If null, don't do anything
@@ -212,9 +215,8 @@ class _HiitScreenState extends State<HiitScreen> {
                                 "Sets",
                                 style: TextStyle(
                                     fontFamily: "Raleway",
-                                    fontWeight: FontWeight.w500,
-                                )
-                            ),
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w500)),
                             subtitle: Text('${_hiit.sets}'),
                             leading: Icon(Icons.fitness_center),
                             onTap: () {
@@ -228,16 +230,16 @@ class _HiitScreenState extends State<HiitScreen> {
                                         initialIntegerValue: _hiit.sets,
                                         title: Text("Sets in the workout",
                                             textAlign: TextAlign.center,
-                                            style: TextStyle(fontSize: 18)
-                                        )
+                                            style: TextStyle(
+                                                fontFamily: "Raleway",
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w500))
                                     );
                                   }).then((sets){
                                 // If null, don't do anything
                                 if (sets == null) return;
                                 // If there is only 1 set in the workout, set the set rest time to 0
-                                if (sets == 1) {
-                                  _hiit.setRest = Duration(seconds: 0);
-                                }
+                                if (sets == 1) { _hiit.setRest = Duration(seconds: 0);}
                                 // Update the number of sets to reflect user input
                                 _hiit.sets = sets;
                                 _onHiitChanged();
@@ -250,9 +252,8 @@ class _HiitScreenState extends State<HiitScreen> {
                                 "Set Rest",
                                 style: TextStyle(
                                     fontFamily: "Raleway",
-                                    fontWeight: FontWeight.w500
-                                )
-                            ),
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w500)),
                             subtitle: Text(formatTime(_hiit.setRest)),
                             leading: Icon(Icons.timer),
                             onTap: () {
@@ -264,8 +265,10 @@ class _HiitScreenState extends State<HiitScreen> {
                                         initDuration: _hiit.setRest,
                                         title: Text("Rest time between each set",
                                             textAlign: TextAlign.center,
-                                            style: TextStyle(fontSize: 16)
-                                        )
+                                            style: TextStyle(
+                                                fontFamily: "Raleway",
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w500))
                                     );
                                   }).then((setRestTime){
                                 // If null, don't do anything
