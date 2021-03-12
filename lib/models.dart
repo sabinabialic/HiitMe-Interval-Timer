@@ -221,15 +221,16 @@ class Workout {
     _showNotification();
     _step = WorkoutState.finished;
     _timeRemaining = Duration(seconds: 0);
-    _playSound(endSound);
+    //_playSound(endSound);
   }
 
   // Function to play a sound
   Future _playSound(String sound) async {
     String ringerStatus = await SoundMode.ringerModeStatus;
-    if (ringerStatus == "Normal Mode") {
+    //print(ringerStatus);
+    if (ringerStatus.contains("Normal Mode")) {
       return await player.play(sound);
-    } else return;
+    } return;
   }
 
   void _showNotification() async {
@@ -240,9 +241,8 @@ class Workout {
     );
 
     var iosDetails = new IOSNotificationDetails();
-
     var generalNotificationDetails = new NotificationDetails(
-      android: androidDetails, iOS: iosDetails);
+        android: androidDetails, iOS: iosDetails);
 
     await flutterLocalNotificationsPlugin.show(
       0, "Interval Timer", "Workout Complete!", generalNotificationDetails
