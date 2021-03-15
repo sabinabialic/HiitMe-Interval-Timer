@@ -13,9 +13,6 @@ A interval training timer written with Flutter for which is compatible with iOS 
 - [Instal the Dart SDK](https://dart.dev/get-dart)
 
 ## Abstract
-
-<img style="float: right;" src="assets/images/demo.gif" alt="Interval Timer Demo Gif" width="220">
-
 High-intensity interval training (HIIT) is a form of interval training which generally combines short bursts of intense exercise with periods of rest or lower-intensity exercise. It is a quick and effective way to increase metabolism, improve cardiovascular endurance and build muscle which can be done anywhere without additional equipment. The purpose of this mobile application is to create a sleek, modern interval timer which is accessible on both iOS and Android. In order to do this, the application will be developed using Google’s Flutter development toolkit.
 
 The user is able to customize the following aspects of the timer...
@@ -24,6 +21,11 @@ The user is able to customize the following aspects of the timer...
 - Rest time between each rep
 - Number of sets in the workout
 - Rest time between each set
+
+<p align="center">
+  <img src="assets/images/demo.gif" width=50% title="Interval Timer App Demo"
+  alt="Interval Timer App Demo">
+</p>
 
 ## Acknowledgements
 - Sounds obtained from [ZapSplat](https://www.zapsplat.com/)
