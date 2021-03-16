@@ -22,9 +22,17 @@ The user is able to customize the following aspects of the timer...
 - Number of sets in the workout
 - Rest time between each set
 
-<p align="center">
-  <img src="assets/images/demo.gif" width=50% title="Interval Timer App Demo"
-  alt="Interval Timer App Demo">
+## App Screenshots
+<p align="center" float="left">
+  <img src="assets/images/iPhone Screenshots/mainScreen.png" width=40% title="Interval Timer App Main Screen" alt="Interval Timer App Main Screen">
+
+  <img src="assets/images/iPhone Screenshots/durationPicker.png" width=40% title="Interval Timer App Duration Picker" alt="Interval Timer App Duration Picker">
+</p>
+
+<p align="center" float="left">
+  <img src="assets/images/iPhone Screenshots/workoutScreen.png" width=40% title="Interval Timer App Workout Screen" alt="Interval Timer App Workout Screen">
+
+  <img src="assets/images/iPhone Screenshots/finishedScreen.png" width=40% title="Interval Timer App Finished Screen" alt="Interval Timer App Finished Screen">
 </p>
 
 ## Acknowledgements
