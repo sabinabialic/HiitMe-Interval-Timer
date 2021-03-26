@@ -23,6 +23,7 @@ The user is able to customize the following aspects of the timer...
 - Rest time between each set
 
 ## App Screenshots
+- [App Demo](https://youtu.be/y8hMDminsJk)
 <p align="center" float="left">
   <img src="assets/images/iPhone Screenshots/mainScreen.png" width=40% title="Interval Timer App Main Screen" alt="Interval Timer App Main Screen">
 
