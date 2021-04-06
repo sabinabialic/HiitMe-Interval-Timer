@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:interval_timer/screens/workout_screen.dart';
@@ -35,7 +33,7 @@ class _HiitScreenState extends State<HiitScreen> {
         title: Text(
           "Interval Timer",
           style: TextStyle(fontFamily: "Roboto",
-              fontSize: ResponsiveFlutter.of(context).fontSize(3))
+              fontSize: ResponsiveFlutter.of(context).fontSize(3.2))
         ),
         elevation: defaultTargetPlatform == TargetPlatform.android ? 5.0 : 0.0,
         backgroundColor: Color(0xFFFFFF),
@@ -85,7 +83,7 @@ class _HiitScreenState extends State<HiitScreen> {
                               splashColor: Colors.deepPurple[800],
                               icon: Icon(
                                   Icons.play_arrow,
-                                  size: ResponsiveFlutter.of(context).wp(5)),
+                                  size: ResponsiveFlutter.of(context).wp(6)),
                               label: Text(
                                   "Start Workout",
                                   style: TextStyle(

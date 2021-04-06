@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:audioplayers/audio_cache.dart';
+import 'package:interval_timer/screens/workout_screen.dart';
 import 'package:sound_mode/sound_mode.dart';
 import 'main.dart';
 
@@ -106,6 +107,36 @@ class Workout {
   get timeRemaining => _timeRemaining;
   get totalTimeElapsed => _totalTimeElapsed;
   get isActive => _timer != null && _timer.isActive;
+
+  get timeRemainingSeconds => _timeRemaining.inSeconds;
+  get timeElapsedSeconds => _totalTimeElapsed.inSeconds;
+  get workTime => _hiit.workTime.inSeconds;
+  get repRestTime => _hiit.repRest.inSeconds;
+  get setRestTime => _hiit.setRest.inSeconds;
+
+  percentage(){
+    if (_step == WorkoutState.starting) {
+      return 1-(timeRemainingSeconds/3);
+    } else if(_step == WorkoutState.exercising) {
+      return 1-(timeRemainingSeconds/workTime);
+    } else if (_step == WorkoutState.repResting) {
+      return 1-(timeRemainingSeconds/repRestTime);
+    } else if (_step == WorkoutState.setResting) {
+      return 1-(timeRemainingSeconds/setRestTime);
+    } else return 1.0;
+  }
+
+  pausedPercentage() {
+    if (_step == WorkoutState.starting && !_timer.isActive) {
+      return 1-(timeRemainingSeconds/3);
+    } else if(_step == WorkoutState.exercising && !_timer.isActive) {
+      return 1-(timeRemainingSeconds/workTime);
+    } else if (_step == WorkoutState.repResting && !_timer.isActive) {
+      return 1-(timeRemainingSeconds/repRestTime);
+    } else if (_step == WorkoutState.setResting && !_timer.isActive) {
+      return 1-(timeRemainingSeconds/setRestTime);
+    } else return 1.0;
+  }
 
   _tick(Timer timer) {
     if (_step != WorkoutState.starting) {
