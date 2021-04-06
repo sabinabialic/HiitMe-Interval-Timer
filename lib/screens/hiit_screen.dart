@@ -33,7 +33,7 @@ class _HiitScreenState extends State<HiitScreen> {
         title: Text(
           "Interval Timer",
           style: TextStyle(fontFamily: "Roboto",
-              fontSize: ResponsiveFlutter.of(context).fontSize(3.2))
+              fontSize: ResponsiveFlutter.of(context).fontSize(3))
         ),
         elevation: defaultTargetPlatform == TargetPlatform.android ? 5.0 : 0.0,
         backgroundColor: Color(0xFFFFFF),
@@ -83,7 +83,7 @@ class _HiitScreenState extends State<HiitScreen> {
                               splashColor: Colors.deepPurple[800],
                               icon: Icon(
                                   Icons.play_arrow,
-                                  size: ResponsiveFlutter.of(context).wp(6)),
+                                  size: ResponsiveFlutter.of(context).wp(5)),
                               label: Text(
                                   "Start Workout",
                                   style: TextStyle(
