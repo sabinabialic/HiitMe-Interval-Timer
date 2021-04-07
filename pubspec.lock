@@ -28,7 +28,7 @@ packages:
       name: audioplayers
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.17.3"
+    version: "0.17.4"
   boolean_selector:
     dependency: transitive
     description:
@@ -233,6 +233,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.0.4+3"
+  percent_indicator:
+    dependency: "direct main"
+    description:
+      name: percent_indicator
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.9+1"
   petitparser:
     dependency: transitive
     description:
@@ -261,6 +268,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.13"
+  responsive_flutter:
+    dependency: "direct main"
+    description:
+      name: responsive_flutter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.4"
   sky_engine:
     dependency: transitive
     description: flutter

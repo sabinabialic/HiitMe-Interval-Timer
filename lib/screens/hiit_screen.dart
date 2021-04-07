@@ -1,10 +1,9 @@
-import 'dart:convert';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:interval_timer/screens/workout_screen.dart';
 import 'package:interval_timer/widgets/durationpicker.dart';
 import 'package:numberpicker/numberpicker.dart';
+import 'package:responsive_flutter/responsive_flutter.dart';
 
 import '../main.dart';
 import '../models.dart';
@@ -33,7 +32,8 @@ class _HiitScreenState extends State<HiitScreen> {
       appBar: AppBar(
         title: Text(
           "Interval Timer",
-          style: TextStyle(fontFamily: "Open Sans", fontSize: 23)
+          style: TextStyle(fontFamily: "Roboto",
+              fontSize: ResponsiveFlutter.of(context).fontSize(3))
         ),
         elevation: defaultTargetPlatform == TargetPlatform.android ? 5.0 : 0.0,
         backgroundColor: Color(0xFFFFFF),
@@ -63,7 +63,7 @@ class _HiitScreenState extends State<HiitScreen> {
                           Text(formatTime(_hiit.getTotalTime()),
                               style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 90,
+                                  fontSize: ResponsiveFlutter.of(context).fontSize(10),
                                   fontFamily: "Open Sans")),
                         ],
                       ),
@@ -81,13 +81,14 @@ class _HiitScreenState extends State<HiitScreen> {
                                     )));},
                               backgroundColor: Colors.black45,
                               splashColor: Colors.deepPurple[800],
-                              icon: Icon(Icons.play_arrow),
+                              icon: Icon(
+                                  Icons.play_arrow,
+                                  size: ResponsiveFlutter.of(context).wp(5)),
                               label: Text(
                                   "Start Workout",
                                   style: TextStyle(
                                       fontFamily: "Open Sans",
-                                      fontSize: 20
-                                  )
+                                      fontSize: ResponsiveFlutter.of(context).fontSize(2))
                               ),
                             ),
                           ),
@@ -114,10 +115,14 @@ class _HiitScreenState extends State<HiitScreen> {
                                 "Exercise Time",
                                 style: TextStyle(
                                     fontFamily: "Raleway",
-                                    fontSize: 18,
+                                    fontSize: ResponsiveFlutter.of(context).fontSize(2.3),
                                     fontWeight: FontWeight.w500)),
-                            subtitle: Text(formatTime(_hiit.workTime)),
-                            leading: Icon(Icons.timer),
+                            subtitle: Text(
+                              formatTime(_hiit.workTime),
+                              style: TextStyle(fontSize: ResponsiveFlutter.of(context).fontSize(1.9))),
+                            leading: Icon(
+                                Icons.timer,
+                                size: ResponsiveFlutter.of(context).wp(7)),
                             onTap: () {
                               showDialog<Duration>(
                                 context: context,
@@ -129,7 +134,7 @@ class _HiitScreenState extends State<HiitScreen> {
                                       textAlign: TextAlign.center,
                                         style: TextStyle(
                                             fontFamily: "Raleway",
-                                            fontSize: 18,
+                                            fontSize: ResponsiveFlutter.of(context).fontSize(2.3),
                                             fontWeight: FontWeight.w500))
                                   );
                                 }).then((workTime){
@@ -147,10 +152,14 @@ class _HiitScreenState extends State<HiitScreen> {
                               "Rest Time",
                                 style: TextStyle(
                                     fontFamily: "Raleway",
-                                    fontSize: 18,
+                                    fontSize: ResponsiveFlutter.of(context).fontSize(2.3),
                                     fontWeight: FontWeight.w500)),
-                            subtitle: Text(formatTime(_hiit.repRest)),
-                            leading: Icon(Icons.timer),
+                            subtitle: Text(
+                                formatTime(_hiit.repRest),
+                                style: TextStyle(fontSize: ResponsiveFlutter.of(context).fontSize(1.9))),
+                            leading: Icon(
+                                Icons.timer,
+                                size: ResponsiveFlutter.of(context).wp(7)),
                             onTap: () {
                               showDialog<Duration>(
                                   context: context,
@@ -162,7 +171,7 @@ class _HiitScreenState extends State<HiitScreen> {
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
                                                 fontFamily: "Raleway",
-                                                fontSize: 18,
+                                                fontSize: ResponsiveFlutter.of(context).fontSize(2.3),
                                                 fontWeight: FontWeight.w500))
                                     );
                                   }).then((repRestTime){
@@ -180,10 +189,14 @@ class _HiitScreenState extends State<HiitScreen> {
                                 "Reps",
                                 style: TextStyle(
                                     fontFamily: "Raleway",
-                                    fontSize: 18,
+                                    fontSize: ResponsiveFlutter.of(context).fontSize(2.3),
                                     fontWeight: FontWeight.w500)),
-                            subtitle: Text('${_hiit.reps}'),
-                            leading: Icon(Icons.repeat),
+                            subtitle: Text(
+                                '${_hiit.reps}',
+                                style: TextStyle(fontSize: ResponsiveFlutter.of(context).fontSize(1.9))),
+                            leading: Icon(
+                                Icons.repeat,
+                                size: ResponsiveFlutter.of(context).wp(7)),
                             onTap: () {
                               showDialog<int>(
                                   context: context,
@@ -197,7 +210,7 @@ class _HiitScreenState extends State<HiitScreen> {
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
                                                 fontFamily: "Raleway",
-                                                fontSize: 18,
+                                                fontSize: ResponsiveFlutter.of(context).fontSize(2.3),
                                                 fontWeight: FontWeight.w500))
                                     );
                                   }).then((reps){
@@ -215,10 +228,14 @@ class _HiitScreenState extends State<HiitScreen> {
                                 "Sets",
                                 style: TextStyle(
                                     fontFamily: "Raleway",
-                                    fontSize: 18,
+                                    fontSize: ResponsiveFlutter.of(context).fontSize(2.3),
                                     fontWeight: FontWeight.w500)),
-                            subtitle: Text('${_hiit.sets}'),
-                            leading: Icon(Icons.fitness_center),
+                            subtitle: Text(
+                                '${_hiit.sets}',
+                                style: TextStyle(fontSize: ResponsiveFlutter.of(context).fontSize(1.9))),
+                            leading: Icon(
+                                Icons.fitness_center,
+                                size: ResponsiveFlutter.of(context).wp(7)),
                             onTap: () {
                               showDialog<int>(
                                   context: context,
@@ -232,7 +249,7 @@ class _HiitScreenState extends State<HiitScreen> {
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
                                                 fontFamily: "Raleway",
-                                                fontSize: 18,
+                                                fontSize: ResponsiveFlutter.of(context).fontSize(2.3),
                                                 fontWeight: FontWeight.w500))
                                     );
                                   }).then((sets){
@@ -252,10 +269,14 @@ class _HiitScreenState extends State<HiitScreen> {
                                 "Set Rest",
                                 style: TextStyle(
                                     fontFamily: "Raleway",
-                                    fontSize: 18,
+                                    fontSize: ResponsiveFlutter.of(context).fontSize(2.3),
                                     fontWeight: FontWeight.w500)),
-                            subtitle: Text(formatTime(_hiit.setRest)),
-                            leading: Icon(Icons.timer),
+                            subtitle: Text(
+                                formatTime(_hiit.setRest),
+                                style: TextStyle(fontSize: ResponsiveFlutter.of(context).fontSize(1.9))),
+                            leading: Icon(
+                                Icons.timer,
+                                size: ResponsiveFlutter.of(context).wp(7)),
                             onTap: () {
                               showDialog<Duration>(
                                   context: context,
@@ -267,7 +288,7 @@ class _HiitScreenState extends State<HiitScreen> {
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
                                                 fontFamily: "Raleway",
-                                                fontSize: 18,
+                                                fontSize: ResponsiveFlutter.of(context).fontSize(2.3),
                                                 fontWeight: FontWeight.w500))
                                     );
                                   }).then((setRestTime){

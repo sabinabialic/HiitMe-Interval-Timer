@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 import '../main.dart';
 import '../models.dart';
 
@@ -73,18 +74,18 @@ class _WorkoutScreenState extends State<WorkoutScreen>{
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: Column(
               children: <Widget>[
-                Expanded(child: Row()),
+                SizedBox(height: 100),
                 // This row contains the name of the stage of the workout
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                        workoutStage(_workout.step),
-                        style: TextStyle(
-                          fontSize: 58.0,
-                          fontFamily: "Raleway",
-                          color: Colors.white70
-                        )
+                      workoutStage(_workout.step),
+                      style: TextStyle(
+                        fontSize: 58.0,
+                        fontFamily: "Raleway",
+                        color: Colors.white70
+                      )
                     )
                   ],
                 ),
@@ -92,19 +93,26 @@ class _WorkoutScreenState extends State<WorkoutScreen>{
                 Divider (height: 50, color: Colors.white),
 
                 // Time remaining
-                Container (
-                  padding: EdgeInsets.only(bottom: 18),
-                  width: double.infinity,
-                  child: FittedBox(
-                    child: Text(
-                        formatTime(_workout.timeRemaining),
+                Container(
+                  padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                  child: CircularPercentIndicator(
+                    percent: _workout.percentage(),
+                    circularStrokeCap: CircularStrokeCap.round,
+                    animation: true,
+                    animateFromLastPercent: true,
+                    radius: 300.0,
+                    lineWidth: 20.0,
+                    progressColor: _workout.isActive ? Colors.white : Colors.white70,
+                    backgroundColor: Colors.black12,
+                    center: Text(formatTime(_workout.timeRemaining),
                         style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 60.0,
-                            fontFamily: "Open Sans"
-                        )
-                    )
-                  )),
+                          color: Colors.white,
+                          fontSize: 80.0,
+                          fontFamily: "Open Sans"
+                    )),
+                  )
+                ),
+
                 // Divider
                 Divider (height: 50, color: Colors.white),
 
