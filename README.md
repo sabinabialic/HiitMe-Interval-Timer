@@ -21,7 +21,7 @@ The user is able to customize the following aspects of the timer...
 - Number of sets in the workout
 - Rest time between each set
 
-## [App Demo](https://youtu.be/MMAfnOEFn6I)
+## [App Demo](https://youtu.be/QD5kjTQ-hKQ)
 - Shows user selections for all the duration pickers
 - Runs through a workout staying on the screen
 - The second run through shows that the timer still works in the background, pausing and unpausing a workout, and getting notifications even when the phone is locked
