@@ -96,7 +96,7 @@ class _WorkoutScreenState extends State<WorkoutScreen>{
                 Container(
                   padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
                   child: CircularPercentIndicator(
-                    percent: _workout.isActive ? _workout.percentage() : _workout.pausedPercentage(),
+                    percent: _workout.percentage(),
                     circularStrokeCap: CircularStrokeCap.round,
                     animation: true,
                     animateFromLastPercent: true,

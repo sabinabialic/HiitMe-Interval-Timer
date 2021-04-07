@@ -115,27 +115,17 @@ class Workout {
   get setRestTime => _hiit.setRest.inSeconds;
 
   percentage(){
-    if (_step == WorkoutState.starting) {
-      return 1-(timeRemainingSeconds/3);
-    } else if(_step == WorkoutState.exercising) {
-      return 1-(timeRemainingSeconds/workTime);
-    } else if (_step == WorkoutState.repResting) {
-      return 1-(timeRemainingSeconds/repRestTime);
-    } else if (_step == WorkoutState.setResting) {
-      return 1-(timeRemainingSeconds/setRestTime);
-    } else return 1.0;
-  }
-
-  pausedPercentage() {
-    if (_step == WorkoutState.starting && !_timer.isActive) {
-      return 1-(timeRemainingSeconds/3);
-    } else if(_step == WorkoutState.exercising && !_timer.isActive) {
-      return 1-(timeRemainingSeconds/workTime);
-    } else if (_step == WorkoutState.repResting && !_timer.isActive) {
-      return 1-(timeRemainingSeconds/repRestTime);
-    } else if (_step == WorkoutState.setResting && !_timer.isActive) {
-      return 1-(timeRemainingSeconds/setRestTime);
-    } else return 1.0;
+    if (_timer.isActive || !_timer.isActive) {
+      if (_step == WorkoutState.starting) {
+        return 1-(timeRemainingSeconds/3);
+      } else if(_step == WorkoutState.exercising) {
+        return 1-(timeRemainingSeconds/workTime);
+      } else if (_step == WorkoutState.repResting) {
+        return 1-(timeRemainingSeconds/repRestTime);
+      } else if (_step == WorkoutState.setResting) {
+        return 1-(timeRemainingSeconds/setRestTime);
+      } else return 1.0;
+    }
   }
 
   _tick(Timer timer) {
