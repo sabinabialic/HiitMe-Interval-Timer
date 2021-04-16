@@ -242,7 +242,7 @@ class Workout {
     _showNotification();
     _step = WorkoutState.finished;
     _timeRemaining = Duration(seconds: 0);
-    //_playSound(endSound);
+    _playSound(endSound);
   }
 
   // Function to play a sound

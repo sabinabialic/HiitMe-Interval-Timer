@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:responsive_flutter/responsive_flutter.dart';
 import '../main.dart';
 import '../models.dart';
 
@@ -74,7 +75,7 @@ class _WorkoutScreenState extends State<WorkoutScreen>{
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: Column(
               children: <Widget>[
-                SizedBox(height: 100),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.1),
                 // This row contains the name of the stage of the workout
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -82,7 +83,7 @@ class _WorkoutScreenState extends State<WorkoutScreen>{
                     Text(
                       workoutStage(_workout.step),
                       style: TextStyle(
-                        fontSize: 58.0,
+                        fontSize: MediaQuery.of(context).size.width * 0.1,
                         fontFamily: "Raleway",
                         color: Colors.white70
                       )
@@ -90,7 +91,7 @@ class _WorkoutScreenState extends State<WorkoutScreen>{
                   ],
                 ),
                 // Divider
-                Divider (height: 50, color: Colors.white),
+                Divider (height: MediaQuery.of(context).size.height * 0.05, color: Colors.white),
 
                 // Time remaining
                 Container(
@@ -100,21 +101,21 @@ class _WorkoutScreenState extends State<WorkoutScreen>{
                     circularStrokeCap: CircularStrokeCap.round,
                     animation: true,
                     animateFromLastPercent: true,
-                    radius: 300.0,
-                    lineWidth: 20.0,
+                    radius: MediaQuery.of(context).size.height * 0.4,
+                    lineWidth: MediaQuery.of(context).size.height * 0.02,
                     progressColor: _workout.isActive ? Colors.white : Colors.white70,
                     backgroundColor: Colors.black12,
                     center: Text(formatTime(_workout.timeRemaining),
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 80.0,
+                          fontSize: MediaQuery.of(context).size.width * 0.15,
                           fontFamily: "Open Sans"
                     )),
                   )
                 ),
 
                 // Divider
-                Divider (height: 50, color: Colors.white),
+                Divider (height: MediaQuery.of(context).size.height * 0.05, color: Colors.white),
 
                 // This table shows more info about the workout
                 Table(
@@ -134,7 +135,7 @@ class _WorkoutScreenState extends State<WorkoutScreen>{
                           child: Text("SET",
                           style: TextStyle(
                               fontFamily: "Raleway",
-                              fontSize: 24.0,
+                              fontSize: MediaQuery.of(context).size.width * 0.05,
                               color: Colors.white70),
                           textAlign: TextAlign.center)
                         ),
@@ -143,7 +144,7 @@ class _WorkoutScreenState extends State<WorkoutScreen>{
                             child: Text("REP",
                                 style: TextStyle(
                                     fontFamily: "Raleway",
-                                    fontSize: 24.0,
+                                    fontSize: MediaQuery.of(context).size.width * 0.05,
                                     color: Colors.white70),
                                 textAlign: TextAlign.center)
                         ),
@@ -152,7 +153,7 @@ class _WorkoutScreenState extends State<WorkoutScreen>{
                             child: Text("TIME ELAPSED",
                                 style: TextStyle(
                                     fontFamily: "Raleway",
-                                    fontSize: 22.0,
+                                    fontSize: MediaQuery.of(context).size.width * 0.05,
                                     color: Colors.white70),
                                 textAlign: TextAlign.center)
                         ),
@@ -165,27 +166,27 @@ class _WorkoutScreenState extends State<WorkoutScreen>{
                           TableCell(
                               child: Text('${_workout.set}',
                                   style: TextStyle(
-                                      fontSize: 52.0, color: Colors.white),
+                                      fontSize: MediaQuery.of(context).size.width * 0.1, color: Colors.white),
                                   textAlign: TextAlign.center)
                           ),
                           // Rep
                           TableCell(
                               child: Text('${_workout.rep}',
                                   style: TextStyle(
-                                      fontSize: 52.0, color: Colors.white),
+                                      fontSize: MediaQuery.of(context).size.width * 0.1, color: Colors.white),
                                   textAlign: TextAlign.center)
                           ),
                           // Total Time
                           TableCell(
                               child: Text(formatTime(_workout.totalTimeElapsed),
                                   style: TextStyle(
-                                      fontSize: 52.0, color: Colors.white),
+                                      fontSize: MediaQuery.of(context).size.width * 0.1, color: Colors.white),
                                   textAlign: TextAlign.center)
                           ),
                         ]),
                   ],
                 ),
-                Expanded (child: _buttonBar())
+                Expanded(child: _buttonBar())
               ],
             )
           )
@@ -218,7 +219,7 @@ class _WorkoutScreenState extends State<WorkoutScreen>{
     if (_workout.step == WorkoutState.finished) {
       return IconButton(
         padding: EdgeInsets.all(10),
-        iconSize: 100,
+        iconSize: MediaQuery.of(context).size.height * 0.12,
         // When pressed, pop the current screen
         onPressed: () => Navigator.pop(context),
         // Icon on the button
@@ -226,28 +227,27 @@ class _WorkoutScreenState extends State<WorkoutScreen>{
       );
     } else {
       return Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           IconButton(
-              padding: EdgeInsets.fromLTRB(10, 10, 50, 10),
-              iconSize: 100,
-              // When pressed, dispose the workout and pop the current screen
-              onPressed: () => {
-                _workout.dispose(),
-                Navigator.pop(context),
-              },
-              // Icon on the button
-              icon: Icon(Icons.cancel, color: Colors.white70)
-          ), IconButton(
-              padding: EdgeInsets.fromLTRB(50, 10, 10, 10),
-              iconSize: 100,
-              onPressed: _workout.isActive? _pause : _start,
-              // Icon on the button depends on if the workout is active or not
-              icon: Icon(_workout.isActive ?
-                // If active pause icon, if inactive play icon
-                Icons.pause_circle_filled : Icons.play_circle_filled,
-                color: Colors.white70
-              )
+            iconSize: MediaQuery.of(context).size.height * 0.12,
+            // When pressed, dispose the workout and pop the current screen
+            onPressed: () => {
+              _workout.dispose(),
+              Navigator.pop(context),
+            },
+            // Icon on the button
+            icon: Icon(Icons.cancel, color: Colors.white70)
+          ),
+          IconButton(
+            iconSize: MediaQuery.of(context).size.height * 0.12,
+            onPressed: _workout.isActive? _pause : _start,
+            // Icon on the button depends on if the workout is active or not
+            icon: Icon(_workout.isActive ?
+              // If active pause icon, if inactive play icon
+              Icons.pause_circle_filled : Icons.play_circle_filled,
+              color: Colors.white70
+            )
           )
         ],
       );

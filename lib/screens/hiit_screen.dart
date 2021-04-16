@@ -30,13 +30,14 @@ class _HiitScreenState extends State<HiitScreen> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
+        centerTitle: true,
         title: Text(
           "Interval Timer",
+          textAlign: TextAlign.center,
           style: TextStyle(fontFamily: "Roboto",
-              fontSize: ResponsiveFlutter.of(context).fontSize(3))
+              fontSize: MediaQuery.of(context).size.width * 0.07)
         ),
-        elevation: defaultTargetPlatform == TargetPlatform.android ? 5.0 : 0.0,
-        backgroundColor: Color(0xFFFFFF),
+        elevation: 0.0, backgroundColor: Colors.transparent,
       ),
       body: Stack(
         alignment: Alignment.center,
@@ -50,11 +51,10 @@ class _HiitScreenState extends State<HiitScreen> {
                   begin: FractionalOffset.topLeft,
                   end: FractionalOffset.bottomRight,
                 )),
-
             child: Column(
               children: <Widget>[
                 Padding(
-                  padding: EdgeInsets.fromLTRB(20, 140, 20, 60),
+                  padding: EdgeInsets.fromLTRB(0, MediaQuery.of(context).size.height * 0.15, 0, MediaQuery.of(context).size.height * 0.1),
                   child: Column(
                     children: <Widget>[
                       Row(
@@ -63,7 +63,7 @@ class _HiitScreenState extends State<HiitScreen> {
                           Text(formatTime(_hiit.getTotalTime()),
                               style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: ResponsiveFlutter.of(context).fontSize(10),
+                                  fontSize: MediaQuery.of(context).size.width * 0.25,
                                   fontFamily: "Open Sans")),
                         ],
                       ),
@@ -71,24 +71,21 @@ class _HiitScreenState extends State<HiitScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Padding(
-                            padding: EdgeInsets.only(top: 50),
-                            child: FloatingActionButton.extended(
-                              onPressed: () {
-                                Navigator.push(
-                                  context, MaterialPageRoute(
-                                    builder: (context) => WorkoutScreen(
-                                        hiit: _hiit
-                                    )));},
-                              backgroundColor: Colors.black45,
-                              splashColor: Colors.deepPurple[800],
-                              icon: Icon(
-                                  Icons.play_arrow,
-                                  size: ResponsiveFlutter.of(context).wp(5)),
-                              label: Text(
-                                  "Start Workout",
-                                  style: TextStyle(
-                                      fontFamily: "Open Sans",
-                                      fontSize: ResponsiveFlutter.of(context).fontSize(2))
+                            padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.05),
+                            child: RaisedButton.icon(
+                              onPressed: () { Navigator.push( context,
+                                  MaterialPageRoute(builder: (context) => WorkoutScreen(hiit: _hiit)));},
+                              shape: new RoundedRectangleBorder(
+                                borderRadius: new BorderRadius.circular(75.0),
+                              ),
+                              padding: EdgeInsets.fromLTRB(30, 5, 30, 5),
+                              elevation: 15.0,
+                              color: Colors.black38,
+                              icon: Icon(Icons.play_arrow, color: Colors.white,
+                                  size: MediaQuery.of(context).size.width * 0.09),
+                              label: Text("Start Workout", style: TextStyle(
+                                  fontFamily: "Open Sans", color: Colors.white,
+                                  fontSize: MediaQuery.of(context).size.width * 0.06)
                               ),
                             ),
                           ),
@@ -106,7 +103,7 @@ class _HiitScreenState extends State<HiitScreen> {
                             topLeft: Radius.circular(60),
                             topRight: Radius.circular(60))),
                     child: Padding(
-                      padding: EdgeInsets.fromLTRB(40, 40, 40, 40),
+                      padding: EdgeInsets.fromLTRB(40, 30, 40, 0),
                       child: SingleChildScrollView(
                         child: Column(children: <Widget>[
                           // Exercise Time
@@ -115,14 +112,14 @@ class _HiitScreenState extends State<HiitScreen> {
                                 "Exercise Time",
                                 style: TextStyle(
                                     fontFamily: "Raleway",
-                                    fontSize: ResponsiveFlutter.of(context).fontSize(2.3),
+                                    fontSize: MediaQuery.of(context).size.height * 0.026,
                                     fontWeight: FontWeight.w500)),
                             subtitle: Text(
                               formatTime(_hiit.workTime),
-                              style: TextStyle(fontSize: ResponsiveFlutter.of(context).fontSize(1.9))),
+                              style: TextStyle(fontSize: MediaQuery.of(context).size.height * 0.022)),
                             leading: Icon(
                                 Icons.timer,
-                                size: ResponsiveFlutter.of(context).wp(7)),
+                                size: MediaQuery.of(context).size.height * 0.04),
                             onTap: () {
                               showDialog<Duration>(
                                 context: context,
@@ -133,8 +130,8 @@ class _HiitScreenState extends State<HiitScreen> {
                                     title: Text("Exercise time for each rep",
                                       textAlign: TextAlign.center,
                                         style: TextStyle(
-                                            fontFamily: "Raleway",
-                                            fontSize: ResponsiveFlutter.of(context).fontSize(2.3),
+                                            fontFamily: "Roboto",
+                                            fontSize: MediaQuery.of(context).size.height * 0.025,
                                             fontWeight: FontWeight.w500))
                                   );
                                 }).then((workTime){
@@ -152,14 +149,14 @@ class _HiitScreenState extends State<HiitScreen> {
                               "Rest Time",
                                 style: TextStyle(
                                     fontFamily: "Raleway",
-                                    fontSize: ResponsiveFlutter.of(context).fontSize(2.3),
+                                    fontSize: MediaQuery.of(context).size.height * 0.026,
                                     fontWeight: FontWeight.w500)),
                             subtitle: Text(
                                 formatTime(_hiit.repRest),
-                                style: TextStyle(fontSize: ResponsiveFlutter.of(context).fontSize(1.9))),
+                                style: TextStyle(fontSize: MediaQuery.of(context).size.height * 0.022)),
                             leading: Icon(
                                 Icons.timer,
-                                size: ResponsiveFlutter.of(context).wp(7)),
+                                size: MediaQuery.of(context).size.height * 0.04),
                             onTap: () {
                               showDialog<Duration>(
                                   context: context,
@@ -170,8 +167,8 @@ class _HiitScreenState extends State<HiitScreen> {
                                         title: Text("Rest time between each rep",
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
-                                                fontFamily: "Raleway",
-                                                fontSize: ResponsiveFlutter.of(context).fontSize(2.3),
+                                                fontFamily: "Roboto",
+                                                fontSize: MediaQuery.of(context).size.height * 0.025,
                                                 fontWeight: FontWeight.w500))
                                     );
                                   }).then((repRestTime){
@@ -189,14 +186,14 @@ class _HiitScreenState extends State<HiitScreen> {
                                 "Reps",
                                 style: TextStyle(
                                     fontFamily: "Raleway",
-                                    fontSize: ResponsiveFlutter.of(context).fontSize(2.3),
+                                    fontSize: MediaQuery.of(context).size.height * 0.026,
                                     fontWeight: FontWeight.w500)),
                             subtitle: Text(
                                 '${_hiit.reps}',
-                                style: TextStyle(fontSize: ResponsiveFlutter.of(context).fontSize(1.9))),
+                                style: TextStyle(fontSize: MediaQuery.of(context).size.height * 0.022)),
                             leading: Icon(
                                 Icons.repeat,
-                                size: ResponsiveFlutter.of(context).wp(7)),
+                                size: MediaQuery.of(context).size.height * 0.04),
                             onTap: () {
                               showDialog<int>(
                                   context: context,
@@ -209,8 +206,8 @@ class _HiitScreenState extends State<HiitScreen> {
                                         title: Text("Reps in each set",
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
-                                                fontFamily: "Raleway",
-                                                fontSize: ResponsiveFlutter.of(context).fontSize(2.3),
+                                                fontFamily: "Roboto",
+                                                fontSize: MediaQuery.of(context).size.height * 0.025,
                                                 fontWeight: FontWeight.w500))
                                     );
                                   }).then((reps){
@@ -228,14 +225,14 @@ class _HiitScreenState extends State<HiitScreen> {
                                 "Sets",
                                 style: TextStyle(
                                     fontFamily: "Raleway",
-                                    fontSize: ResponsiveFlutter.of(context).fontSize(2.3),
+                                    fontSize: MediaQuery.of(context).size.height * 0.026,
                                     fontWeight: FontWeight.w500)),
                             subtitle: Text(
                                 '${_hiit.sets}',
-                                style: TextStyle(fontSize: ResponsiveFlutter.of(context).fontSize(1.9))),
+                                style: TextStyle(fontSize: MediaQuery.of(context).size.height * 0.022)),
                             leading: Icon(
                                 Icons.fitness_center,
-                                size: ResponsiveFlutter.of(context).wp(7)),
+                                size: MediaQuery.of(context).size.height * 0.04),
                             onTap: () {
                               showDialog<int>(
                                   context: context,
@@ -248,8 +245,8 @@ class _HiitScreenState extends State<HiitScreen> {
                                         title: Text("Sets in the workout",
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
-                                                fontFamily: "Raleway",
-                                                fontSize: ResponsiveFlutter.of(context).fontSize(2.3),
+                                                fontFamily: "Roboto",
+                                                fontSize: MediaQuery.of(context).size.height * 0.025,
                                                 fontWeight: FontWeight.w500))
                                     );
                                   }).then((sets){
@@ -269,14 +266,14 @@ class _HiitScreenState extends State<HiitScreen> {
                                 "Set Rest",
                                 style: TextStyle(
                                     fontFamily: "Raleway",
-                                    fontSize: ResponsiveFlutter.of(context).fontSize(2.3),
+                                    fontSize: MediaQuery.of(context).size.height * 0.026,
                                     fontWeight: FontWeight.w500)),
                             subtitle: Text(
                                 formatTime(_hiit.setRest),
-                                style: TextStyle(fontSize: ResponsiveFlutter.of(context).fontSize(1.9))),
+                                style: TextStyle(fontSize: MediaQuery.of(context).size.height * 0.022)),
                             leading: Icon(
                                 Icons.timer,
-                                size: ResponsiveFlutter.of(context).wp(7)),
+                                size: MediaQuery.of(context).size.height * 0.04),
                             onTap: () {
                               showDialog<Duration>(
                                   context: context,
@@ -287,8 +284,8 @@ class _HiitScreenState extends State<HiitScreen> {
                                         title: Text("Rest time between each set",
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
-                                                fontFamily: "Raleway",
-                                                fontSize: ResponsiveFlutter.of(context).fontSize(2.3),
+                                                fontFamily: "Roboto",
+                                                fontSize: MediaQuery.of(context).size.height * 0.025,
                                                 fontWeight: FontWeight.w500))
                                     );
                                   }).then((setRestTime){
