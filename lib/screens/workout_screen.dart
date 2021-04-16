@@ -225,16 +225,31 @@ class _WorkoutScreenState extends State<WorkoutScreen>{
         icon: Icon(Icons.home, color: Colors.white70)
       );
     } else {
-      return IconButton(
-        padding: EdgeInsets.all(10),
-        iconSize: 100,
-        onPressed: _workout.isActive? _pause : _start,
-        // Icon on the button depends on if the workout is active or not
-        icon: Icon(_workout.isActive ?
-            // If active pause icon, if inactive play icon
-            Icons.pause_circle_filled : Icons.play_circle_filled,
-            color: Colors.white70
-        )
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          IconButton(
+              padding: EdgeInsets.fromLTRB(10, 10, 50, 10),
+              iconSize: 100,
+              // When pressed, dispose the workout and pop the current screen
+              onPressed: () => {
+                _workout.dispose(),
+                Navigator.pop(context),
+              },
+              // Icon on the button
+              icon: Icon(Icons.cancel, color: Colors.white70)
+          ), IconButton(
+              padding: EdgeInsets.fromLTRB(50, 10, 10, 10),
+              iconSize: 100,
+              onPressed: _workout.isActive? _pause : _start,
+              // Icon on the button depends on if the workout is active or not
+              icon: Icon(_workout.isActive ?
+                // If active pause icon, if inactive play icon
+                Icons.pause_circle_filled : Icons.play_circle_filled,
+                color: Colors.white70
+              )
+          )
+        ],
       );
     }
   }
