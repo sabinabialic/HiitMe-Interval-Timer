@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-// Widget obtained from https://pub.dev/packages/numberpicker
 import 'package:numberpicker/numberpicker.dart';
 
 class DurationPicker extends StatefulWidget {
@@ -63,11 +62,11 @@ class _DurationPickerState extends State<DurationPicker> {
 
       actions: [
         // If the user clicks cancel, go back to the main page
-        new FlatButton(
+        new TextButton(
             onPressed: () => Navigator.of(context).pop(),
             child: widget.cancelWidget),
         // If the user clicks ok, the new values need to be updated
-        new FlatButton(
+        new TextButton(
             onPressed: () => Navigator.of(context).pop(
                 new Duration(
                     minutes: min,

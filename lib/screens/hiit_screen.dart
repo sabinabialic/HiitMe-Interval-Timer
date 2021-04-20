@@ -1,10 +1,7 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:interval_timer/screens/workout_screen.dart';
 import 'package:interval_timer/widgets/durationpicker.dart';
 import 'package:numberpicker/numberpicker.dart';
-import 'package:responsive_flutter/responsive_flutter.dart';
-
 import '../main.dart';
 import '../models.dart';
 
