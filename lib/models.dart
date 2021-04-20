@@ -1,9 +1,10 @@
 import 'dart:async';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:audioplayers/audio_cache.dart';
-import 'package:interval_timer/screens/workout_screen.dart';
 import 'package:sound_mode/sound_mode.dart';
 import 'main.dart';
+import 'dart:io' show Platform;
 
 AudioCache player = AudioCache();
 
@@ -242,16 +243,23 @@ class Workout {
     _showNotification();
     _step = WorkoutState.finished;
     _timeRemaining = Duration(seconds: 0);
-    _playSound(endSound);
+    if (Platform.isAndroid) {
+      _playSound(endSound);
+    }
   }
 
   // Function to play a sound
   Future _playSound(String sound) async {
     String ringerStatus = await SoundMode.ringerModeStatus;
-    //print(ringerStatus);
-    if (ringerStatus.contains("Normal Mode")) {
-      return await player.play(sound);
-    } return;
+    if (Platform.isIOS) {
+      // iOS doesn't push the message to flutter, so need to read twice
+      await Future.delayed(Duration(milliseconds: 10), () async {
+        ringerStatus = await SoundMode.ringerModeStatus;
+      });
+    }
+    // Print to console for debugging
+    debugPrint(ringerStatus);
+    if (ringerStatus.contains("Normal Mode")) {return await player.play(sound);}
   }
 
   void _showNotification() async {
@@ -266,8 +274,7 @@ class Workout {
         android: androidDetails, iOS: iosDetails);
 
     await flutterLocalNotificationsPlugin.show(
-      0, "Interval Timer", "Workout Complete!", generalNotificationDetails
+      0, "HiitMe Interval Timer", "Workout Complete!", generalNotificationDetails
     );
   }
-
 }
