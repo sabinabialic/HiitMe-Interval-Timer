@@ -26,6 +26,7 @@ class _HiitScreenState extends State<HiitScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
+      // App bar with text
       appBar: AppBar(
         centerTitle: true,
         title: Text(
@@ -36,6 +37,68 @@ class _HiitScreenState extends State<HiitScreen> {
         ),
         elevation: 0.0, backgroundColor: Colors.transparent,
       ),
+
+      // Sliding drawer
+      drawer: Drawer(
+        // ListView ensures the user can scroll through the options if there
+        // is not enough space on the screen
+        child: ListView(
+          padding: EdgeInsets.all(15),
+          children: <Widget>[
+            SizedBox(height: 100),
+            Row( children: [
+              Icon(Icons.save),
+              SizedBox(width: 20),
+              Text('Timer Presets', style: TextStyle(
+                  fontFamily: "Roboto", color: Colors.black,
+                  fontSize: MediaQuery.of(context).size.width * 0.05))
+            ]),
+            ListTile(subtitle: Text('Default Timer', style: TextStyle(
+                fontFamily: "Roboto", color: Colors.black54,
+                fontSize: MediaQuery.of(context).size.width * 0.04)),
+              onTap: () {
+                // Set default values for the timer
+                _hiit = defaultHiit;
+                // Callback
+                _onHiitChanged();
+                // Close the drawer
+                Navigator.pop(context);
+              }),
+            ListTile(subtitle: Text('EMOM', style: TextStyle(
+                fontFamily: "Roboto", color: Colors.black54,
+                fontSize: MediaQuery.of(context).size.width * 0.04)),
+              onTap: () {
+                // Set default values for EMOM
+                _hiit.workTime = Duration(seconds: 60);
+                _hiit.repRest = Duration(seconds: 0);
+                _hiit.reps = 5;
+                _hiit.sets = 1;
+                _hiit.setRest = Duration(seconds: 0);
+                // Callback
+                _onHiitChanged();
+                // Close the drawer
+                Navigator.pop(context);
+              }),
+            ListTile(subtitle: Text('E90s', style: TextStyle(
+                fontFamily: "Roboto", color: Colors.black54,
+                fontSize: MediaQuery.of(context).size.width * 0.04)),
+              onTap: () {
+                // Set default values for E90s
+                _hiit.workTime = Duration(seconds: 90);
+                _hiit.repRest = Duration(seconds: 0);
+                _hiit.reps = 5;
+                _hiit.sets = 1;
+                _hiit.setRest = Duration(seconds: 0);
+                // Callback
+                _onHiitChanged();
+                // Close the drawer
+                Navigator.pop(context);
+              }),
+          ],
+        )
+      ),
+
+      // Main UI
       body: Stack(
         alignment: Alignment.center,
         children: <Widget>[
