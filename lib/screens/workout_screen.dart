@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:responsive_flutter/responsive_flutter.dart';
+import 'package:wakelock/wakelock.dart';
 import '../main.dart';
 import '../models.dart';
 
@@ -31,6 +32,8 @@ class _WorkoutScreenState extends State<WorkoutScreen>{
   @override
   initState() {
     super.initState();
+    // The following line will enable the Android and iOS wakelock.
+    Wakelock.enable();
     _workout = Workout(widget.hiit, _onWorkoutChanged);
     _start();
   }
@@ -42,6 +45,8 @@ class _WorkoutScreenState extends State<WorkoutScreen>{
   @override
   disposeState() {
     _workout.dispose();
+    // The following line will disable the Android and iOS wakelock.
+    Wakelock.disable();
     super.dispose();
   }
 

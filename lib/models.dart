@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:audioplayers/audio_cache.dart';
 import 'package:sound_mode/sound_mode.dart';
@@ -257,9 +258,15 @@ class Workout {
         ringerStatus = await SoundMode.ringerModeStatus;
       });
     }
+
     // Print to console for debugging
-    debugPrint(ringerStatus);
+    //debugPrint(ringerStatus);
+
+    // If ringer is on, play a sound
     if (ringerStatus.contains("Normal Mode")) {return await player.play(sound);}
+    // If vibrate mode, send a vibration
+    else if (ringerStatus.contains("Vibrate Mode")) {return HapticFeedback.vibrate();}
+    return;
   }
 
   void _showNotification() async {
