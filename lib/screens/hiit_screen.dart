@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:interval_timer/screens/workout_screen.dart';
 import 'package:interval_timer/widgets/durationpicker.dart';
 import 'package:numberpicker/numberpicker.dart';
-import 'package:wakelock/wakelock.dart';
 import '../main.dart';
 import '../models.dart';
 
