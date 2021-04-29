@@ -11,8 +11,8 @@ String workoutStage (WorkoutState step) {
   switch (step) {
     case WorkoutState.starting: return "STARTING";
     case WorkoutState.exercising: return "EXERCISE";
-    case WorkoutState.repResting: return "REP REST";
-    case WorkoutState.setResting: return "SET REST";
+    case WorkoutState.repResting: return "ROUND REST";
+    case WorkoutState.setResting: return "WORKOUT REST";
     case WorkoutState.finished: return "FINISHED";
     default: return "";
   }
@@ -77,10 +77,10 @@ class _WorkoutScreenState extends State<WorkoutScreen>{
           Container(
             // Background of the screen
             decoration: _getDecoration(theme),
-            padding: EdgeInsets.symmetric(horizontal: 20),
+            padding: EdgeInsets.fromLTRB(20, MediaQuery.of(context).size.height * 0.08, 20, MediaQuery.of(context).size.height * 0.08),
             child: Column(
               children: <Widget>[
-                SizedBox(height: MediaQuery.of(context).size.height * 0.1),
+                //SizedBox(height: MediaQuery.of(context).size.height * 0.08),
                 // This row contains the name of the stage of the workout
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -88,9 +88,8 @@ class _WorkoutScreenState extends State<WorkoutScreen>{
                     Text(
                       workoutStage(_workout.step),
                       style: TextStyle(
-                        fontSize: MediaQuery.of(context).size.width * 0.1,
-                        fontFamily: "Raleway",
-                        color: Colors.white70
+                        fontSize: MediaQuery.of(context).size.width * 0.12,
+                        fontFamily: "Raleway", color: Colors.white70
                       )
                     )
                   ],
@@ -110,12 +109,29 @@ class _WorkoutScreenState extends State<WorkoutScreen>{
                     lineWidth: MediaQuery.of(context).size.height * 0.02,
                     progressColor: _workout.isActive ? Colors.white : Colors.white70,
                     backgroundColor: Colors.black12,
-                    center: Text(formatTime(_workout.timeRemaining),
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: MediaQuery.of(context).size.width * 0.15,
-                          fontFamily: "Open Sans"
-                    )),
+                    center: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(formatTime(_workout.timeRemaining),
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: MediaQuery.of(context).size.width * 0.2,
+                            fontFamily: "Open Sans", fontWeight: FontWeight.w500
+                          )),
+                        SizedBox(height: MediaQuery.of(context).size.height * 0.025),
+                        Text("Time Elapsed",
+                          style: TextStyle(
+                              color: Colors.white70,
+                              fontSize: MediaQuery.of(context).size.width * 0.05,
+                              fontFamily: "Raleway", fontWeight: FontWeight.w500),
+                          textAlign: TextAlign.center),
+                        Text(formatTime(_workout.totalTimeElapsed),
+                            style: TextStyle(
+                              color: Colors.white70,
+                              fontSize: MediaQuery.of(context).size.width * 0.1),
+                            textAlign: TextAlign.center)
+                      ],
+                    ),
                   )
                 ),
 
@@ -126,9 +142,7 @@ class _WorkoutScreenState extends State<WorkoutScreen>{
                 Table(
                   // Setting up the columns
                   columnWidths: {
-                    0: FlexColumnWidth(0.5),
-                    1: FlexColumnWidth(0.5),
-                    2: FlexColumnWidth(1.0)
+                    0: FlexColumnWidth(0.5), 1: FlexColumnWidth(0.5)
                   },
                   // Setting up the rows
                   children: [
@@ -137,60 +151,59 @@ class _WorkoutScreenState extends State<WorkoutScreen>{
                       children: [
                         // Set
                         TableCell(
-                          child: Text("SET",
+                          child: Text("WORKOUT",
                           style: TextStyle(
-                              fontFamily: "Raleway",
-                              fontSize: MediaQuery.of(context).size.width * 0.05,
+                              fontFamily: "Raleway", fontWeight: FontWeight.w500,
+                              fontSize: MediaQuery.of(context).size.width * 0.07,
                               color: Colors.white70),
                           textAlign: TextAlign.center)
                         ),
                         // Rep
                         TableCell(
-                            child: Text("REP",
+                            child: Text("ROUND",
                                 style: TextStyle(
-                                    fontFamily: "Raleway",
-                                    fontSize: MediaQuery.of(context).size.width * 0.05,
+                                    fontFamily: "Raleway", fontWeight: FontWeight.w500,
+                                    fontSize: MediaQuery.of(context).size.width * 0.07,
                                     color: Colors.white70),
                                 textAlign: TextAlign.center)
-                        ),
-                        // Total Time
-                        TableCell(
-                            child: Text("TIME ELAPSED",
-                                style: TextStyle(
-                                    fontFamily: "Raleway",
-                                    fontSize: MediaQuery.of(context).size.width * 0.05,
-                                    color: Colors.white70),
-                                textAlign: TextAlign.center)
-                        ),
-                      ]),
+                        )]),
 
                     // Second row - Contains the info
                     TableRow(
                         children: [
                           // Set
                           TableCell(
-                              child: Text('${_workout.set}',
-                                  style: TextStyle(
-                                      fontSize: MediaQuery.of(context).size.width * 0.1, color: Colors.white),
-                                  textAlign: TextAlign.center)
-                          ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Text('${_workout.set}',
+                                    style: TextStyle(
+                                        fontSize: MediaQuery.of(context).size.width * 0.15, color: Colors.white),
+                                    textAlign: TextAlign.center),
+                                Text('/${_workout.totalSets}',
+                                    style: TextStyle(
+                                        fontSize: MediaQuery.of(context).size.width * 0.1, color: Colors.white70),
+                                    textAlign: TextAlign.center)
+                              ])),
                           // Rep
                           TableCell(
-                              child: Text('${_workout.rep}',
-                                  style: TextStyle(
-                                      fontSize: MediaQuery.of(context).size.width * 0.1, color: Colors.white),
-                                  textAlign: TextAlign.center)
-                          ),
-                          // Total Time
-                          TableCell(
-                              child: Text(formatTime(_workout.totalTimeElapsed),
-                                  style: TextStyle(
-                                      fontSize: MediaQuery.of(context).size.width * 0.1, color: Colors.white),
-                                  textAlign: TextAlign.center)
-                          ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Text('${_workout.rep}',
+                                    style: TextStyle(
+                                        fontSize: MediaQuery.of(context).size.width * 0.15, color: Colors.white),
+                                    textAlign: TextAlign.right),
+                                Text('/${_workout.totalReps}',
+                                    style: TextStyle(
+                                        fontSize: MediaQuery.of(context).size.width * 0.1, color: Colors.white70),
+                                    textAlign: TextAlign.right)
+                              ])),
                         ]),
-                  ],
-                ),
+                  ]),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.025),
                 Expanded(child: _buttonBar())
               ],
             )
@@ -223,7 +236,7 @@ class _WorkoutScreenState extends State<WorkoutScreen>{
     // On finished, show a button to go back to main screen
     if (_workout.step == WorkoutState.finished) {
       return IconButton(
-        padding: EdgeInsets.all(10),
+        padding: EdgeInsets.all(15),
         iconSize: MediaQuery.of(context).size.height * 0.12,
         // When pressed, pop the current screen
         onPressed: () => Navigator.pop(context),

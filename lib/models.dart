@@ -113,6 +113,8 @@ class Workout {
   get timeElapsedSeconds => _totalTimeElapsed.inSeconds;
   get workTime => _hiit.workTime.inSeconds;
   get repRestTime => _hiit.repRest.inSeconds;
+  get totalReps => _hiit.reps;
+  get totalSets => _hiit.sets;
   get setRestTime => _hiit.setRest.inSeconds;
 
   percentage(){
