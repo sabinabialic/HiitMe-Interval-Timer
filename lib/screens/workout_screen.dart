@@ -88,7 +88,7 @@ class _WorkoutScreenState extends State<WorkoutScreen>{
                     Text(
                       workoutStage(_workout.step),
                       style: TextStyle(
-                        fontSize: MediaQuery.of(context).size.width * 0.12,
+                        fontSize: MediaQuery.of(context).size.width * 0.1,
                         fontFamily: "Raleway", color: Colors.white70
                       )
                     )
