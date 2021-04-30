@@ -70,146 +70,149 @@ class _WorkoutScreenState extends State<WorkoutScreen>{
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
-    return Scaffold(
-      body: Stack(
-        alignment: Alignment.center,
-        children: <Widget> [
-          Container(
-            // Background of the screen
-            decoration: _getDecoration(theme),
-            padding: EdgeInsets.fromLTRB(20, MediaQuery.of(context).size.height * 0.08, 20, MediaQuery.of(context).size.height * 0.08),
-            child: Column(
-              children: <Widget>[
-                //SizedBox(height: MediaQuery.of(context).size.height * 0.08),
-                // This row contains the name of the stage of the workout
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      workoutStage(_workout.step),
-                      style: TextStyle(
-                        fontSize: MediaQuery.of(context).size.width * 0.1,
-                        fontFamily: "Raleway", color: Colors.white70
+    return MediaQuery(
+      data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+      child: Scaffold(
+        body: Stack(
+          alignment: Alignment.center,
+          children: <Widget> [
+            Container(
+              // Background of the screen
+              decoration: _getDecoration(theme),
+              padding: EdgeInsets.fromLTRB(20, MediaQuery.of(context).size.height * 0.08, 20, MediaQuery.of(context).size.height * 0.08),
+              child: Column(
+                children: <Widget>[
+                  //SizedBox(height: MediaQuery.of(context).size.height * 0.08),
+                  // This row contains the name of the stage of the workout
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        workoutStage(_workout.step),
+                        style: TextStyle(
+                          fontSize: MediaQuery.of(context).size.width * 0.1,
+                          fontFamily: "Raleway", color: Colors.white70
+                        )
                       )
-                    )
-                  ],
-                ),
-                // Divider
-                Divider (height: MediaQuery.of(context).size.height * 0.05, color: Colors.white),
+                    ],
+                  ),
+                  // Divider
+                  Divider (height: MediaQuery.of(context).size.height * 0.05, color: Colors.white),
 
-                // Time remaining
-                Container(
-                  padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                  child: CircularPercentIndicator(
-                    percent: _workout.percentage(),
-                    circularStrokeCap: CircularStrokeCap.round,
-                    animation: true,
-                    animateFromLastPercent: true,
-                    radius: MediaQuery.of(context).size.height * 0.4,
-                    lineWidth: MediaQuery.of(context).size.height * 0.02,
-                    progressColor: _workout.isActive ? Colors.white : Colors.white70,
-                    backgroundColor: Colors.black12,
-                    center: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(formatTime(_workout.timeRemaining),
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: MediaQuery.of(context).size.width * 0.2,
-                            fontFamily: "Open Sans", fontWeight: FontWeight.w500
-                          )),
-                        SizedBox(height: MediaQuery.of(context).size.height * 0.025),
-                        Text("Time Elapsed",
-                          style: TextStyle(
-                              color: Colors.white70,
-                              fontSize: MediaQuery.of(context).size.width * 0.05,
-                              fontFamily: "Raleway", fontWeight: FontWeight.w500),
-                          textAlign: TextAlign.center),
-                        Text(formatTime(_workout.totalTimeElapsed),
+                  // Time remaining
+                  Container(
+                    padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                    child: CircularPercentIndicator(
+                      percent: _workout.percentage(),
+                      circularStrokeCap: CircularStrokeCap.round,
+                      animation: true,
+                      animateFromLastPercent: true,
+                      radius: MediaQuery.of(context).size.height * 0.4,
+                      lineWidth: MediaQuery.of(context).size.height * 0.02,
+                      progressColor: _workout.isActive ? Colors.white : Colors.white70,
+                      backgroundColor: Colors.black12,
+                      center: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(formatTime(_workout.timeRemaining),
                             style: TextStyle(
-                              color: Colors.white70,
-                              fontSize: MediaQuery.of(context).size.width * 0.1),
-                            textAlign: TextAlign.center)
-                      ],
-                    ),
-                  )
-                ),
+                              color: Colors.white,
+                              fontSize: MediaQuery.of(context).size.width * 0.2,
+                              fontFamily: "Open Sans", fontWeight: FontWeight.w500
+                            )),
+                          SizedBox(height: MediaQuery.of(context).size.height * 0.025),
+                          Text("Time Elapsed",
+                            style: TextStyle(
+                                color: Colors.white70,
+                                fontSize: MediaQuery.of(context).size.width * 0.05,
+                                fontFamily: "Raleway", fontWeight: FontWeight.w500),
+                            textAlign: TextAlign.center),
+                          Text(formatTime(_workout.totalTimeElapsed),
+                              style: TextStyle(
+                                color: Colors.white70,
+                                fontSize: MediaQuery.of(context).size.width * 0.1),
+                              textAlign: TextAlign.center)
+                        ],
+                      ),
+                    )
+                  ),
 
-                // Divider
-                Divider (height: MediaQuery.of(context).size.height * 0.05, color: Colors.white),
+                  // Divider
+                  Divider (height: MediaQuery.of(context).size.height * 0.05, color: Colors.white),
 
-                // This table shows more info about the workout
-                Table(
-                  // Setting up the columns
-                  columnWidths: {
-                    0: FlexColumnWidth(0.5), 1: FlexColumnWidth(0.5)
-                  },
-                  // Setting up the rows
-                  children: [
-                    // First row - Contains the text
-                    TableRow(
-                      children: [
-                        // Set
-                        TableCell(
-                          child: Text("WORKOUT",
-                          style: TextStyle(
-                              fontFamily: "Raleway", fontWeight: FontWeight.w500,
-                              fontSize: MediaQuery.of(context).size.width * 0.07,
-                              color: Colors.white70),
-                          textAlign: TextAlign.center)
-                        ),
-                        // Rep
-                        TableCell(
-                            child: Text("ROUND",
-                                style: TextStyle(
-                                    fontFamily: "Raleway", fontWeight: FontWeight.w500,
-                                    fontSize: MediaQuery.of(context).size.width * 0.07,
-                                    color: Colors.white70),
-                                textAlign: TextAlign.center)
-                        )]),
-
-                    // Second row - Contains the info
-                    TableRow(
+                  // This table shows more info about the workout
+                  Table(
+                    // Setting up the columns
+                    columnWidths: {
+                      0: FlexColumnWidth(0.5), 1: FlexColumnWidth(0.5)
+                    },
+                    // Setting up the rows
+                    children: [
+                      // First row - Contains the text
+                      TableRow(
                         children: [
                           // Set
                           TableCell(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                Text('${_workout.set}',
-                                    style: TextStyle(
-                                        fontSize: MediaQuery.of(context).size.width * 0.15, color: Colors.white),
-                                    textAlign: TextAlign.center),
-                                Text('/${_workout.totalSets}',
-                                    style: TextStyle(
-                                        fontSize: MediaQuery.of(context).size.width * 0.1, color: Colors.white70),
-                                    textAlign: TextAlign.center)
-                              ])),
+                            child: Text("WORKOUT",
+                            style: TextStyle(
+                                fontFamily: "Raleway", fontWeight: FontWeight.w500,
+                                fontSize: MediaQuery.of(context).size.width * 0.07,
+                                color: Colors.white70),
+                            textAlign: TextAlign.center)
+                          ),
                           // Rep
                           TableCell(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                Text('${_workout.rep}',
-                                    style: TextStyle(
-                                        fontSize: MediaQuery.of(context).size.width * 0.15, color: Colors.white),
-                                    textAlign: TextAlign.right),
-                                Text('/${_workout.totalReps}',
-                                    style: TextStyle(
-                                        fontSize: MediaQuery.of(context).size.width * 0.1, color: Colors.white70),
-                                    textAlign: TextAlign.right)
-                              ])),
-                        ]),
-                  ]),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.025),
-                Expanded(child: _buttonBar())
-              ],
+                              child: Text("ROUND",
+                                  style: TextStyle(
+                                      fontFamily: "Raleway", fontWeight: FontWeight.w500,
+                                      fontSize: MediaQuery.of(context).size.width * 0.07,
+                                      color: Colors.white70),
+                                  textAlign: TextAlign.center)
+                          )]),
+
+                      // Second row - Contains the info
+                      TableRow(
+                          children: [
+                            // Set
+                            TableCell(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Text('${_workout.set}',
+                                      style: TextStyle(
+                                          fontSize: MediaQuery.of(context).size.width * 0.15, color: Colors.white),
+                                      textAlign: TextAlign.center),
+                                  Text('/${_workout.totalSets}',
+                                      style: TextStyle(
+                                          fontSize: MediaQuery.of(context).size.width * 0.1, color: Colors.white70),
+                                      textAlign: TextAlign.center)
+                                ])),
+                            // Rep
+                            TableCell(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Text('${_workout.rep}',
+                                      style: TextStyle(
+                                          fontSize: MediaQuery.of(context).size.width * 0.15, color: Colors.white),
+                                      textAlign: TextAlign.right),
+                                  Text('/${_workout.totalReps}',
+                                      style: TextStyle(
+                                          fontSize: MediaQuery.of(context).size.width * 0.1, color: Colors.white70),
+                                      textAlign: TextAlign.right)
+                                ])),
+                          ]),
+                    ]),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.025),
+                  Expanded(child: _buttonBar())
+                ],
+              )
             )
-          )
-        ],
-      )
+          ],
+        )
+      ),
     );
   }
   
