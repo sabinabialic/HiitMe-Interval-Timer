@@ -45,7 +45,7 @@ class HiitApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'HIITme Interval Timer',
+      title: 'HiitMe Interval Timer',
       home: HiitScreen(),
       debugShowCheckedModeBanner: false,
     );
@@ -54,7 +54,16 @@ class HiitApp extends StatelessWidget {
 
 // Function to format the time
 String formatTime(Duration duration) {
-  String minutes = (duration.inMinutes).toString().padLeft(2, '0');
-  String seconds = (duration.inSeconds % 60).toString().padLeft(2, '0');
-  return '$minutes:$seconds';
+  // Special formatting in the case where the timer is >= 1 hour
+  if (duration.inHours >= 1) {
+    String hours = (duration.inHours).toString();
+    String minutes = ((duration.inMinutes)-((duration.inHours)*60)).toString().padLeft(2, '0');
+    String seconds = (duration.inSeconds % 60).toString().padLeft(2, '0');
+    return '$hours:$minutes:$seconds';
+  }
+  else {
+    String minutes = (duration.inMinutes).toString();
+    String seconds = (duration.inSeconds % 60).toString().padLeft(2, '0');
+    return '$minutes:$seconds';
+  }
 }

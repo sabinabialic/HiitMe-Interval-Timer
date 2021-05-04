@@ -1,9 +1,11 @@
 import 'dart:async';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:audioplayers/audio_cache.dart';
-import 'package:interval_timer/screens/workout_screen.dart';
 import 'package:sound_mode/sound_mode.dart';
 import 'main.dart';
+import 'dart:io' show Platform;
 
 AudioCache player = AudioCache();
 
@@ -45,12 +47,12 @@ class Hiit{
   }
 
   Hiit.fromJson(Map<String, dynamic> json) :
-        reps = json['reps'],
-        workTime = Duration(seconds: json['workTime']),
-        repRest = Duration(seconds: json['repRest']),
-        sets = json['sets'],
-        setRest = Duration(seconds: json['setRest']),
-        delayTime = Duration(seconds: json['delayTime']);
+    reps = json['reps'],
+    workTime = Duration(seconds: json['workTime']),
+    repRest = Duration(seconds: json['repRest']),
+    sets = json['sets'],
+    setRest = Duration(seconds: json['setRest']),
+    delayTime = Duration(seconds: json['delayTime']);
 
   Map<String, dynamic> toJson() => {
     'reps': reps,
@@ -60,7 +62,6 @@ class Hiit{
     'setRest': setRest.inSeconds,
     'delayTime': delayTime.inSeconds,
   };
-
 }
 
 // All the possible workout states
@@ -112,6 +113,8 @@ class Workout {
   get timeElapsedSeconds => _totalTimeElapsed.inSeconds;
   get workTime => _hiit.workTime.inSeconds;
   get repRestTime => _hiit.repRest.inSeconds;
+  get totalReps => _hiit.reps;
+  get totalSets => _hiit.sets;
   get setRestTime => _hiit.setRest.inSeconds;
 
   percentage(){
@@ -136,9 +139,10 @@ class Workout {
     else {
       _timeRemaining -= Duration(seconds: 1);
       // Play a countdown before the workout starts
-      if (_timeRemaining.inSeconds <= 3 && _step == WorkoutState.starting) {
-        _playSound(countdownSound);
-      }
+      //if (_timeRemaining.inSeconds <= 3 && _step == WorkoutState.starting) {
+
+      // Play a countdown the last 3 seconds of the current stage
+      if (_timeRemaining.inSeconds <= 3) {_playSound(countdownSound);}
     }
     _onStateChanged();
   }
@@ -242,16 +246,29 @@ class Workout {
     _showNotification();
     _step = WorkoutState.finished;
     _timeRemaining = Duration(seconds: 0);
-    //_playSound(endSound);
+    if (Platform.isAndroid) {
+      _playSound(endSound);
+    }
   }
 
   // Function to play a sound
   Future _playSound(String sound) async {
     String ringerStatus = await SoundMode.ringerModeStatus;
-    //print(ringerStatus);
-    if (ringerStatus.contains("Normal Mode")) {
-      return await player.play(sound);
-    } return;
+    if (Platform.isIOS) {
+      // iOS doesn't push the message to flutter, so need to read twice
+      await Future.delayed(Duration(milliseconds: 10), () async {
+        ringerStatus = await SoundMode.ringerModeStatus;
+      });
+    }
+
+    // Print to console for debugging
+    //debugPrint(ringerStatus);
+
+    // If ringer is on, play a sound
+    if (ringerStatus.contains("Normal Mode")) {return await player.play(sound);}
+    // If vibrate mode, send a vibration
+    else if (ringerStatus.contains("Vibrate Mode")) {return HapticFeedback.vibrate();}
+    return;
   }
 
   void _showNotification() async {
@@ -266,8 +283,7 @@ class Workout {
         android: androidDetails, iOS: iosDetails);
 
     await flutterLocalNotificationsPlugin.show(
-      0, "Interval Timer", "Workout Complete!", generalNotificationDetails
+      0, "HiitMe Interval Timer", "Workout Complete!", generalNotificationDetails
     );
   }
-
 }
