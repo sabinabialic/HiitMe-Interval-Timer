@@ -1,12 +1,19 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:interval_timer/screens/workout_screen.dart';
 import 'package:interval_timer/widgets/durationpicker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:rate_my_app/rate_my_app.dart';
 import '../main.dart';
 import '../models.dart';
 
 class HiitScreen extends StatefulWidget {
+  SharedPreferences prefs;
+
+  HiitScreen({@required this.prefs});
+
   @override
   State<StatefulWidget> createState() => _HiitScreenState();
 }
@@ -24,8 +31,8 @@ class _HiitScreenState extends State<HiitScreen> {
 
   @override
   initState() {
-    _hiit = defaultHiit;
-    super.initState();
+    var json = widget.prefs.getString('hiit');
+    _hiit = json != null? Hiit.fromJson(jsonDecode(json)) : defaultHiit;
 
     // App rating prompt
     WidgetsBinding.instance?.addPostFrameCallback((_) async {
@@ -34,10 +41,18 @@ class _HiitScreenState extends State<HiitScreen> {
         _rateMyApp.showRateDialog(context);
       }
     });
+
+    super.initState();
   }
 
   // Callback for when the duration changes
-  _onHiitChanged() { setState(() {}); }
+  _onHiitChanged() {
+    setState(() {});
+    _saveHiit();
+  }
+
+  // Saving to shared preferences
+  _saveHiit() { widget.prefs.setString('hiit', json.encode(_hiit.toJson())); }
 
   @override
   Widget build(BuildContext context) {
