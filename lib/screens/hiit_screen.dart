@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:interval_timer/screens/workout_screen.dart';
 import 'package:interval_timer/widgets/durationpicker.dart';
 import 'package:numberpicker/numberpicker.dart';
+import 'package:rate_my_app/rate_my_app.dart';
 import '../main.dart';
 import '../models.dart';
 
@@ -13,10 +14,26 @@ class HiitScreen extends StatefulWidget {
 class _HiitScreenState extends State<HiitScreen> {
   Hiit _hiit;
 
+  RateMyApp _rateMyApp = RateMyApp(
+    preferencesPrefix: 'rateMyApp_',
+    minDays: 3, minLaunches: 7,
+    remindDays: 3, remindLaunches: 5,
+    googlePlayIdentifier: 'com.greydanedevelopment.hiitme_interval_timer',
+    appStoreIdentifier: '1564361054',
+  );
+
   @override
   initState() {
     _hiit = defaultHiit;
     super.initState();
+
+    // App rating prompt
+    WidgetsBinding.instance?.addPostFrameCallback((_) async {
+      await _rateMyApp.init();
+      if (mounted && _rateMyApp.shouldOpenDialog) {
+        _rateMyApp.showRateDialog(context);
+      }
+    });
   }
 
   // Callback for when the duration changes
