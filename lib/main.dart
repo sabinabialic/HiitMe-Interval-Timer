@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:interval_timer/screens/hiit_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -37,16 +38,27 @@ void main() async{
 
   // Ensure portrait orientation is locked
   WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
-      .then((value) => runApp(HiitApp()));
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
+  // Shared preferences
+  var prefs = await SharedPreferences.getInstance();
+  runApp(HiitApp(prefs: prefs));
 }
 
-class HiitApp extends StatelessWidget {
+class HiitApp extends StatefulWidget {
+  // Shared preferences
+  SharedPreferences prefs;
+  HiitApp({this.prefs});
+  @override
+  State<StatefulWidget> createState() => _HiitAppState();
+}
+
+class _HiitAppState extends State<HiitApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'HIITme Interval Timer',
-      home: HiitScreen(),
+      title: 'HiitMe Interval Timer',
+      home: HiitScreen(prefs: widget.prefs),
       debugShowCheckedModeBanner: false,
     );
   }
@@ -54,7 +66,16 @@ class HiitApp extends StatelessWidget {
 
 // Function to format the time
 String formatTime(Duration duration) {
-  String minutes = (duration.inMinutes).toString().padLeft(2, '0');
-  String seconds = (duration.inSeconds % 60).toString().padLeft(2, '0');
-  return '$minutes:$seconds';
+  // Special formatting in the case where the timer is >= 1 hour
+  if (duration.inHours >= 1) {
+    String hours = (duration.inHours).toString();
+    String minutes = ((duration.inMinutes)-((duration.inHours)*60)).toString().padLeft(2, '0');
+    String seconds = (duration.inSeconds % 60).toString().padLeft(2, '0');
+    return '$hours:$minutes:$seconds';
+  }
+  else {
+    String minutes = (duration.inMinutes).toString();
+    String seconds = (duration.inSeconds % 60).toString().padLeft(2, '0');
+    return '$minutes:$seconds';
+  }
 }

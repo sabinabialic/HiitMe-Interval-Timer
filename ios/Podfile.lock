@@ -7,16 +7,25 @@ PODS:
   - MuteDetect (0.0.1)
   - path_provider (0.0.1):
     - Flutter
+  - rate_my_app (1.1.0):
+    - Flutter
+  - shared_preferences (0.0.1):
+    - Flutter
   - sound_mode (0.0.1):
     - Flutter
     - MuteDetect (~> 0.0.1)
+  - wakelock (0.0.1):
+    - Flutter
 
 DEPENDENCIES:
   - audioplayers (from `.symlinks/plugins/audioplayers/ios`)
   - Flutter (from `Flutter`)
   - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
+  - rate_my_app (from `.symlinks/plugins/rate_my_app/ios`)
+  - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
   - sound_mode (from `.symlinks/plugins/sound_mode/ios`)
+  - wakelock (from `.symlinks/plugins/wakelock/ios`)
 
 SPEC REPOS:
   trunk:
@@ -31,8 +40,14 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_local_notifications/ios"
   path_provider:
     :path: ".symlinks/plugins/path_provider/ios"
+  rate_my_app:
+    :path: ".symlinks/plugins/rate_my_app/ios"
+  shared_preferences:
+    :path: ".symlinks/plugins/shared_preferences/ios"
   sound_mode:
     :path: ".symlinks/plugins/sound_mode/ios"
+  wakelock:
+    :path: ".symlinks/plugins/wakelock/ios"
 
 SPEC CHECKSUMS:
   audioplayers: 455322b54050b30ea4b1af7cd9e9d105f74efa8c
@@ -40,7 +55,10 @@ SPEC CHECKSUMS:
   flutter_local_notifications: 0c0b1ae97e741e1521e4c1629a459d04b9aec743
   MuteDetect: cce991d2bb0b394ba4478dca8f4d0dde3d5fc13e
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
+  rate_my_app: b2b5847177b024ab7fcfd02ced7a84a9b67eeaf2
+  shared_preferences: af6bfa751691cdc24be3045c43ec037377ada40d
   sound_mode: 46b9b93699745c5726750766508e6a88ce9e0932
+  wakelock: d0fc7c864128eac40eba1617cb5264d9c940b46f
 
 PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
 
