@@ -20,9 +20,9 @@ class InputAlertDialog extends StatefulWidget {
 }
 
 class _InputAlertDialogState extends State<InputAlertDialog> {
-  // Create a text controller and use it to retrieve the current value of the TextField.
+  // Create a text controller and use it to retrieve the current value of the TextField
   final inputController = TextEditingController();
-
+  // Form key to keep track of the state
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -32,7 +32,8 @@ class _InputAlertDialogState extends State<InputAlertDialog> {
     super.dispose();
   }
 
-  String _errorString = null;
+  // Error message on invalid user input
+  String _errorString;
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +43,7 @@ class _InputAlertDialogState extends State<InputAlertDialog> {
         controller: inputController, textInputAction: TextInputAction.go,
         keyboardType: TextInputType.text, textAlign: TextAlign.center,
         cursorColor: Colors.deepPurpleAccent, key: _formKey,
+        // When user input is changed, we need to make sure it's valid
         onChanged: (inputController) { doSomething(inputController); },
         decoration: InputDecoration(
           hintText: "Timer Name", errorText: _errorString,

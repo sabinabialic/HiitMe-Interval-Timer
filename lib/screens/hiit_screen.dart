@@ -1,12 +1,9 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:focused_menu/focused_menu.dart';
 import 'package:focused_menu/modals.dart';
 import 'package:interval_timer/screens/workout_screen.dart';
 import 'package:interval_timer/widgets/customalertdialog.dart';
-import 'package:interval_timer/widgets/customappbar.dart';
 import 'package:interval_timer/widgets/durationpicker.dart';
 import 'package:interval_timer/widgets/integerpicker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -74,6 +71,7 @@ class _HiitScreenState extends State<HiitScreen> {
                 fontSize: MediaQuery.of(context).size.width * 0.07)),
           elevation: 0.0, backgroundColor: Colors.transparent,
         ),
+        drawer: hiitAppDrawer(),
         body: Stack(
           alignment: Alignment.center,
           children: <Widget>[
@@ -349,73 +347,48 @@ class _HiitScreenState extends State<HiitScreen> {
     // ListView ensures the user can scroll through the options if there
     // is not enough space on the screen
       child: ListView(
-          padding: EdgeInsets.all(15),
-          children: <Widget>[
-            SizedBox(height: 100),
-            ListTile(
-                leading: Icon(Icons.save),
-                title: Text('Timer Presets', style: TextStyle(
-                    fontFamily: "Roboto", color: Colors.black,
-                    fontSize: MediaQuery.of(context).size.width * 0.05))),
-            ListTile(
-                title: Text('Default Timer', style: TextStyle(
-                    fontFamily: "Roboto", color: Colors.black54,
-                    fontSize: MediaQuery.of(context).size.width * 0.04)),
-                onTap: () {
-                  // Set default values for the timer
-                  _hiit = defaultHiit;
-                  // Callback
-                  _onHiitChanged();
-                  // Close the drawer
-                  Navigator.pop(context);
-                }),
-            ListTile(
-                title: Text('EMOM', style: TextStyle(
-                    fontFamily: "Roboto", color: Colors.black54,
-                    fontSize: MediaQuery.of(context).size.width * 0.04)),
-                onTap: () {
-                  // Set default values for EMOM
-                  _hiit.workTime = Duration(seconds: 60);
-                  _hiit.repRest = Duration(seconds: 0);
-                  _hiit.reps = 5;
-                  _hiit.sets = 1;
-                  _hiit.setRest = Duration(seconds: 0);
-                  // Callback
-                  _onHiitChanged();
-                  // Close the drawer
-                  Navigator.pop(context);
-                }),
-            ListTile(
-                title: Text('E90s', style: TextStyle(
-                    fontFamily: "Roboto", color: Colors.black54,
-                    fontSize: MediaQuery.of(context).size.width * 0.04)),
-                onTap: () {
-                  // Set default values for E90s
-                  _hiit.workTime = Duration(seconds: 90);
-                  _hiit.repRest = Duration(seconds: 0);
-                  _hiit.reps = 5;
-                  _hiit.sets = 1;
-                  _hiit.setRest = Duration(seconds: 0);
-                  // Callback
-                  _onHiitChanged();
-                  // Close the drawer
-                  Navigator.pop(context);
-                }),
-            ListTile(
-                title: Text('My Presets', style: TextStyle(
-                    fontFamily: "Roboto", color: Colors.black54, fontWeight: FontWeight.bold,
-                    fontSize: MediaQuery.of(context).size.width * 0.04)),
-                trailing: Icon(Icons.arrow_forward),
-                onTap: () {
-                  // Close the drawer
-                  Navigator.pop(context);
-                }),
-            Divider(height: 50, thickness: 2),
-            ListTile(
-                leading: Icon(Icons.settings),
-                title: Text('Settings', style: TextStyle(
-                    fontFamily: "Roboto", color: Colors.black,
-                    fontSize: MediaQuery.of(context).size.width * 0.05))),
+        padding: EdgeInsets.all(15),
+        children: <Widget>[
+          SizedBox(height: 100),
+          ListTile(
+            //leading: Icon(Icons.save),
+            title: Text('Timer Presets', style: TextStyle(
+                fontFamily: "Roboto", color: Colors.black,
+                fontSize: MediaQuery.of(context).size.width * 0.05))),
+          ListTile(
+            title: Text('Default Timer', style: TextStyle(
+                fontFamily: "Roboto", color: Colors.black54,
+                fontSize: MediaQuery.of(context).size.width * 0.04)),
+              onTap: () {
+                // Set default values for the timer
+                _hiit = defaultHiit;
+                // Callback
+                _onHiitChanged();
+                // Close the drawer
+                Navigator.pop(context);
+              }),
+          ListTile(
+            title: Text('EMOM', style: TextStyle(
+                fontFamily: "Roboto", color: Colors.black54,
+                fontSize: MediaQuery.of(context).size.width * 0.04)),
+              onTap: () {
+                // Set default values for EMOM
+                _hiit.workTime = Duration(seconds: 60);
+                _hiit.repRest = Duration(seconds: 0);
+                _hiit.reps = 5;
+                _hiit.sets = 1;
+                _hiit.setRest = Duration(seconds: 0);
+                // Callback
+                _onHiitChanged();
+                // Close the drawer
+                Navigator.pop(context);
+              }),
+          ListTile(
+            title: Text('My Presets', style: TextStyle(
+                fontFamily: "Roboto", color: Colors.black54, fontWeight: FontWeight.bold,
+                fontSize: MediaQuery.of(context).size.width * 0.04)),
+              // Close the drawer
+              onTap: () {Navigator.pop(context);}),
           ]));
   }
 }
