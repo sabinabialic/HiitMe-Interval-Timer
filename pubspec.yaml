@@ -5,7 +5,7 @@ description: HIIT timer for interval training.
 # pub.dev using `pub publish`. This is preferred for private packages.
 publish_to: 'none'
 
-version: 1.1.0+3
+version: 1.1.2+5
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -24,6 +24,7 @@ dependencies:
   percent_indicator: ^3.0.1
   wakelock: ^0.5.1
   rate_my_app: ^1.1.0+1
+  focused_menu: ^1.0.0
 
 dev_dependencies:
   flutter_test:

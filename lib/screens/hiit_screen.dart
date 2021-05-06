@@ -1,10 +1,14 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:focused_menu/focused_menu.dart';
+import 'package:focused_menu/modals.dart';
 import 'package:interval_timer/screens/workout_screen.dart';
+import 'package:interval_timer/widgets/customalertdialog.dart';
 import 'package:interval_timer/widgets/durationpicker.dart';
+import 'package:interval_timer/widgets/integerpicker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:numberpicker/numberpicker.dart';
 import 'package:rate_my_app/rate_my_app.dart';
 import '../main.dart';
 import '../models.dart';
@@ -24,13 +28,14 @@ class _HiitScreenState extends State<HiitScreen> {
   RateMyApp _rateMyApp = RateMyApp(
     preferencesPrefix: 'rateMyApp_',
     minDays: 3, minLaunches: 7,
-    remindDays: 3, remindLaunches: 5,
+    remindDays: 2, remindLaunches: 5,
     googlePlayIdentifier: 'com.greydanedevelopment.hiitme_interval_timer',
     appStoreIdentifier: '1564361054',
   );
 
   @override
   initState() {
+    // Initialize shared preferences
     var json = widget.prefs.getString('hiit');
     _hiit = json != null? Hiit.fromJson(jsonDecode(json)) : defaultHiit;
 
@@ -100,23 +105,55 @@ class _HiitScreenState extends State<HiitScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             Padding(
-                              padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.05),
-                              child: RaisedButton.icon(
-                                onPressed: () { Navigator.push( context,
-                                    MaterialPageRoute(builder: (context) => WorkoutScreen(hiit: _hiit)));},
-                                shape: new RoundedRectangleBorder(
-                                  borderRadius: new BorderRadius.circular(75.0),
-                                ),
-                                padding: EdgeInsets.fromLTRB(20, 7, 20, 7),
-                                elevation: 15.0, color: Colors.black38,
-                                icon: Icon(Icons.play_arrow, color: Colors.white,
+                              padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.045),
+                              child: FocusedMenuHolder(
+                                child: RaisedButton.icon(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(75.0),
+                                  ),
+                                  padding: EdgeInsets.fromLTRB(40, 8, 40, 8),
+                                  elevation: 15.0, color: Colors.black38,
+                                  icon: Icon(Icons.play_arrow, color: Colors.white,
                                     size: MediaQuery.of(context).size.width * 0.09),
-                                label: Text("Start Workout", style: TextStyle(
+                                  label: Text("Start Timer", style: TextStyle(
                                     fontFamily: "Open Sans", color: Colors.white,
                                     fontSize: MediaQuery.of(context).size.width * 0.055)
+                                  ),
+                                  onPressed: () { Navigator.push( context,
+                                      MaterialPageRoute(builder: (context) => WorkoutScreen(hiit: _hiit)));
+                                  },
                                 ),
-                              ),
-                            ),
+
+                                // On long hold, opens a focused menu
+                                menuItems: <FocusedMenuItem> [
+                                  FocusedMenuItem(
+                                      title: Text("Start Timer",
+                                          style: TextStyle(fontFamily: "Roboto", fontSize: 16)),
+                                      trailingIcon: Icon(Icons.play_arrow),
+                                      onPressed: (){
+                                        Navigator.push( context,
+                                            MaterialPageRoute(builder: (context) => WorkoutScreen(hiit: _hiit)));
+                                      }),
+                                  FocusedMenuItem(
+                                      title: Text("Save Timer",
+                                          style: TextStyle(fontFamily: "Roboto", fontSize: 16)),
+                                      trailingIcon: Icon(Icons.save_alt),
+                                      onPressed: (){
+                                        debugPrint("Save Timer Pressed");
+                                        showDialog(
+                                            context: context,
+                                            builder: (context) {
+                                              return InputAlertDialog(
+                                                // Set the initial duration
+                                                title: Text("Save Timer", textAlign: TextAlign.center, style: PickerTextStyle())
+                                              );
+                                            }
+                                        );
+                                      }),
+                                ],
+                                menuWidth: MediaQuery.of(context).size.width * 0.6,
+                                menuOffset: 20,
+                              )),
                           ],
                         ),
                       ],
@@ -136,12 +173,7 @@ class _HiitScreenState extends State<HiitScreen> {
                           child: Column(children: <Widget>[
                             // Exercise Time
                             ListTile(
-                              title: Text(
-                                  "Work Time",
-                                  style: TextStyle(
-                                      fontFamily: "Raleway",
-                                      fontSize: MediaQuery.of(context).size.width * 0.05,
-                                      fontWeight: FontWeight.w500)),
+                              title: Text("Work Time", style: PickerTextStyle()),
                               subtitle: Text(
                                 formatTime(_hiit.workTime),
                                 style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.045)),
@@ -157,11 +189,7 @@ class _HiitScreenState extends State<HiitScreen> {
                                       child: DurationPicker(
                                         // Set the initial duration
                                         initDuration: _hiit.workTime,
-                                        title: Text("Work Time", textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                                fontFamily: "Roboto",
-                                                fontSize: MediaQuery.of(context).size.width * 0.05,
-                                                fontWeight: FontWeight.w500))
+                                        title: Text("Work Time", textAlign: TextAlign.center, style: PickerTextStyle())
                                       ),
                                     );
                                   }).then((workTime){
@@ -175,12 +203,7 @@ class _HiitScreenState extends State<HiitScreen> {
                             ),
                             // Rest Time
                             ListTile(
-                              title: Text(
-                                "Rest Time",
-                                  style: TextStyle(
-                                      fontFamily: "Raleway",
-                                      fontSize: MediaQuery.of(context).size.width * 0.05,
-                                      fontWeight: FontWeight.w500)),
+                              title: Text("Rest Time", style: PickerTextStyle()),
                               subtitle: Text(
                                   formatTime(_hiit.repRest),
                                   style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.045)),
@@ -196,12 +219,7 @@ class _HiitScreenState extends State<HiitScreen> {
                                         child: DurationPicker(
                                           // Set the initial duration
                                             initDuration: _hiit.repRest,
-                                            title: Text("Rest Time",
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                    fontFamily: "Roboto",
-                                                    fontSize: MediaQuery.of(context).size.width * 0.05,
-                                                    fontWeight: FontWeight.w500))
+                                            title: Text("Rest Time", textAlign: TextAlign.center, style: PickerTextStyle())
                                         ),
                                       );
                                     }).then((repRestTime){
@@ -215,12 +233,7 @@ class _HiitScreenState extends State<HiitScreen> {
                             ),
                             // Reps
                             ListTile(
-                              title: Text(
-                                  "Rounds",
-                                  style: TextStyle(
-                                      fontFamily: "Raleway",
-                                      fontSize: MediaQuery.of(context).size.width * 0.05,
-                                      fontWeight: FontWeight.w500)),
+                              title: Text("Rounds", style: PickerTextStyle()),
                               subtitle: Text(
                                   '${_hiit.reps}',
                                   style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.045)),
@@ -233,16 +246,9 @@ class _HiitScreenState extends State<HiitScreen> {
                                     builder: (BuildContext context) {
                                       return MediaQuery(
                                         data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
-                                        child: NumberPickerDialog.integer(
-                                            minValue: 1, maxValue: 20,
-                                            // Set the initial value
+                                        child: IntegerPicker(
                                             initialIntegerValue: _hiit.reps,
-                                            title: Text("Rounds",
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                    fontFamily: "Roboto",
-                                                    fontSize: MediaQuery.of(context).size.width * 0.05,
-                                                    fontWeight: FontWeight.w500))
+                                            title: Text("Rounds", textAlign: TextAlign.center, style: PickerTextStyle())
                                         ),
                                       );
                                     }).then((reps){
@@ -256,12 +262,7 @@ class _HiitScreenState extends State<HiitScreen> {
                             ),
                             // Sets
                             ListTile(
-                              title: Text(
-                                  "Total Workouts",
-                                  style: TextStyle(
-                                      fontFamily: "Raleway",
-                                      fontSize: MediaQuery.of(context).size.width * 0.05,
-                                      fontWeight: FontWeight.w500)),
+                              title: Text("Total Workouts", style: PickerTextStyle()),
                               subtitle: Text(
                                   '${_hiit.sets}',
                                   style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.045)),
@@ -274,16 +275,10 @@ class _HiitScreenState extends State<HiitScreen> {
                                     builder: (BuildContext context) {
                                       return MediaQuery(
                                         data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
-                                        child: NumberPickerDialog.integer(
-                                            minValue: 1, maxValue: 20,
+                                        child: IntegerPicker(
                                             // Set the initial value
                                             initialIntegerValue: _hiit.sets,
-                                            title: Text("Total Workouts",
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                    fontFamily: "Roboto",
-                                                    fontSize: MediaQuery.of(context).size.width * 0.05,
-                                                    fontWeight: FontWeight.w500)),
+                                            title: Text("Total Workouts", textAlign: TextAlign.center, style: PickerTextStyle()),
                                         ),
                                       );
                                     }).then((sets){
@@ -299,12 +294,7 @@ class _HiitScreenState extends State<HiitScreen> {
                             ),
                             // Set Rest
                             ListTile(
-                              title: Text(
-                                  "Rest Between Workouts",
-                                  style: TextStyle(
-                                      fontFamily: "Raleway",
-                                      fontSize: MediaQuery.of(context).size.width * 0.05,
-                                      fontWeight: FontWeight.w500)),
+                              title: Text("Rest Between Workouts", style: PickerTextStyle()),
                               subtitle: Text(
                                   formatTime(_hiit.setRest),
                                   style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.045)),
@@ -320,12 +310,7 @@ class _HiitScreenState extends State<HiitScreen> {
                                         child: DurationPicker(
                                           // Set the initial duration
                                           initDuration: _hiit.setRest,
-                                          title: Text("Rest Between Workouts",
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                  fontFamily: "Roboto",
-                                                  fontSize: MediaQuery.of(context).size.width * 0.05,
-                                                  fontWeight: FontWeight.w500))
+                                          title: Text("Rest Between Workouts", textAlign: TextAlign.center, style: PickerTextStyle())
                                         ),
                                       );
                                     }).then((setRestTime){
@@ -349,5 +334,11 @@ class _HiitScreenState extends State<HiitScreen> {
         ),
       ),
     );
+  }
+
+  TextStyle PickerTextStyle() {
+    return TextStyle(
+        fontFamily: "Roboto", fontWeight: FontWeight.w500,
+        fontSize: MediaQuery.of(context).size.width * 0.05);
   }
 }
