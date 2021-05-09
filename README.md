@@ -8,7 +8,6 @@
 A interval training timer written with Flutter for which is compatible with iOS and Android devices. This app was was built for my Honours Project at Carleton University during the Winter 2021 semester, supervised by Professor Louis Nel.
 
 ## Getting Started
-
 - [Install Flutter](https://flutter.dev/docs/get-started/install)
 - [Instal the Dart SDK](https://dart.dev/get-dart)
 
@@ -21,6 +20,11 @@ The user is able to customize the following aspects of the timer...
 - Rest time between each rep
 - Number of sets in the workout
 - Rest time between each set
+
+## [App Demo](https://youtu.be/QD5kjTQ-hKQ)
+- Shows user selections for all the duration pickers
+- Runs through a workout staying on the screen
+- The second run through shows that the timer still works in the background, pausing and unpausing a workout, and getting notifications even when the phone is locked
 
 ## App Screenshots
 <p align="center" float="left">

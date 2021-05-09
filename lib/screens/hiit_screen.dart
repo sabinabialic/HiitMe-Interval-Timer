@@ -170,6 +170,45 @@ class _HiitScreenState extends State<HiitScreen> {
                         padding: EdgeInsets.fromLTRB(30, 30, 30, 0),
                         child: SingleChildScrollView(
                           child: Column(children: <Widget>[
+                            // Countdown before the timer starts
+                            ListTile(
+                              title: Text(
+                                  "Countdown",
+                                  style: TextStyle(
+                                      fontFamily: "Raleway",
+                                      fontSize: MediaQuery.of(context).size.width * 0.05,
+                                      fontWeight: FontWeight.w500)),
+                              subtitle: Text(
+                                  formatTime(_hiit.delayTime),
+                                  style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.045)),
+                              leading: Icon(
+                                  Icons.timer,
+                                  size: MediaQuery.of(context).size.width * 0.09),
+                              onTap: () {
+                                showDialog<Duration>(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return MediaQuery(
+                                        data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+                                        child: DurationPicker(
+                                          // Set the initial duration
+                                            initDuration: _hiit.delayTime,
+                                            title: Text("Countdown", textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                    fontFamily: "Roboto",
+                                                    fontSize: MediaQuery.of(context).size.width * 0.05,
+                                                    fontWeight: FontWeight.w500))
+                                        ),
+                                      );
+                                    }).then((delayTime){
+                                  // If null, don't do anything
+                                  if (delayTime == null) return;
+                                  // Update the work time to reflect user input
+                                  _hiit.delayTime = delayTime;
+                                  _onHiitChanged();
+                                });
+                              },
+                            ),
                             // Exercise Time
                             ListTile(
                               title: Text("Work Time", style: PickerTextStyle()),
