@@ -116,11 +116,12 @@ class Workout {
   get totalReps => _hiit.reps;
   get totalSets => _hiit.sets;
   get setRestTime => _hiit.setRest.inSeconds;
+  get dealyTimeSeconds => _hiit.delayTime.inSeconds;
 
   percentage(){
     if (_timer.isActive || !_timer.isActive) {
       if (_step == WorkoutState.starting) {
-        return 1-(timeRemainingSeconds/3);
+        return 1-(timeRemainingSeconds/dealyTimeSeconds);
       } else if(_step == WorkoutState.exercising) {
         return 1-(timeRemainingSeconds/workTime);
       } else if (_step == WorkoutState.repResting) {
@@ -151,7 +152,6 @@ class Workout {
   start() {
     // Need to consider the current workout state
     if (_step == WorkoutState.initial) {
-      _playSound(countdownSound);
       _step = WorkoutState.starting;
 
       if (_hiit.delayTime.inSeconds == 0) {_nextStep();}
