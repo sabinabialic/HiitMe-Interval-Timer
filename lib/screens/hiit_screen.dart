@@ -1,13 +1,14 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:focused_menu/focused_menu.dart';
 import 'package:focused_menu/modals.dart';
+import 'package:focused_menu/focused_menu.dart';
+import 'package:rate_my_app/rate_my_app.dart';
 import 'package:interval_timer/screens/workout_screen.dart';
 import 'package:interval_timer/widgets/customalertdialog.dart';
 import 'package:interval_timer/widgets/durationpicker.dart';
 import 'package:interval_timer/widgets/integerpicker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:rate_my_app/rate_my_app.dart';
+
 import '../main.dart';
 import '../models.dart';
 
@@ -34,7 +35,7 @@ class _HiitScreenState extends State<HiitScreen> {
   @override
   initState() {
     // Initialize shared preferences
-    var json = widget.prefs.getString('hiit');
+    var json = widget.prefs.getString('hiitmedefault');
     _hiit = json != null? Hiit.fromJson(jsonDecode(json)) : defaultHiit;
 
     // App rating prompt
@@ -51,11 +52,11 @@ class _HiitScreenState extends State<HiitScreen> {
   // Callback for when the duration changes
   _onHiitChanged() {
     setState(() {});
-    _saveHiit();
+    _saveHiit('hiitmedefault');
   }
 
   // Saving to shared preferences
-  _saveHiit() { widget.prefs.setString('hiit', json.encode(_hiit.toJson())); }
+  _saveHiit(savedName) {widget.prefs.setString(savedName, json.encode(Hiit.toMap(_hiit))); }
 
   @override
   Widget build(BuildContext context) {
@@ -138,16 +139,23 @@ class _HiitScreenState extends State<HiitScreen> {
                                           style: TextStyle(fontFamily: "Roboto", fontSize: 16)),
                                       trailingIcon: Icon(Icons.save_alt),
                                       onPressed: (){
-                                        debugPrint("Save Timer Pressed");
                                         showDialog(
-                                            context: context,
-                                            builder: (context) {
-                                              return InputAlertDialog(
-                                                // Set the initial duration
-                                                title: Text("Save Timer", textAlign: TextAlign.center, style: PickerTextStyle())
-                                              );
-                                            }
-                                        );
+                                          context: context,
+                                          builder: (context) {
+                                            return InputAlertDialog(
+                                              // Set the initial duration
+                                              title: Text("Save Timer", textAlign: TextAlign.center, style: PickerTextStyle())
+                                            );
+                                          }
+                                        ).then((savedName) {
+                                          // If empty do nothing
+                                          if(savedName == null) return;
+                                          // Else we have to save this timer
+                                          debugPrint(savedName);
+                                          _saveHiit(savedName);
+                                          // Callback for when the duration changes
+                                          _onHiitChanged();
+                                        });
                                       }),
                                 ],
                                 menuWidth: MediaQuery.of(context).size.width * 0.6,
@@ -376,58 +384,84 @@ class _HiitScreenState extends State<HiitScreen> {
 
   TextStyle PickerTextStyle() {
     return TextStyle(
-        fontFamily: "Roboto", fontWeight: FontWeight.w500,
-        fontSize: MediaQuery.of(context).size.width * 0.05);
+      fontFamily: "Roboto", fontWeight: FontWeight.w500,
+      fontSize: MediaQuery.of(context).size.width * 0.05);
   }
 
   // App Drawer
   hiitAppDrawer() {
+    final keys = widget.prefs.getKeys();
+    List<String> savedKeys = [];
+    //final prefsMap = Map<String, dynamic>();
+
+    for(String key in keys) {
+      if (! (key.contains("rateMyApp") || key.contains("hiitmedefault"))) {
+        savedKeys.add(key);
+        //prefsMap[key] = widget.prefs.get(key);
+        //print(key);
+      }
+    }
+
+    // Debugging
+    //print(savedKeys);
+    //print(prefsMap);
+
     return Drawer(
-    // ListView ensures the user can scroll through the options if there
-    // is not enough space on the screen
       child: ListView(
-        padding: EdgeInsets.all(15),
-        children: <Widget>[
-          SizedBox(height: 100),
+        padding: EdgeInsets.only(top: 100, left: 20),
+        children: [
+          Text("Presets", style: PickerTextStyle()),
+          // Default Timer Preset
           ListTile(
-            //leading: Icon(Icons.save),
-            title: Text('Timer Presets', style: TextStyle(
-                fontFamily: "Roboto", color: Colors.black,
-                fontSize: MediaQuery.of(context).size.width * 0.05))),
+            leading: Text("Default Timer"), onTap: () {
+            // Set default values for the timer
+            _hiit = defaultHiit;
+            // Callback
+            _onHiitChanged();
+            // Close the drawer
+            Navigator.pop(context);
+          }),
+          // EMOM Preset
           ListTile(
-            title: Text('Default Timer', style: TextStyle(
-                fontFamily: "Roboto", color: Colors.black54,
-                fontSize: MediaQuery.of(context).size.width * 0.04)),
-              onTap: () {
-                // Set default values for the timer
-                _hiit = defaultHiit;
-                // Callback
-                _onHiitChanged();
-                // Close the drawer
-                Navigator.pop(context);
-              }),
-          ListTile(
-            title: Text('EMOM', style: TextStyle(
-                fontFamily: "Roboto", color: Colors.black54,
-                fontSize: MediaQuery.of(context).size.width * 0.04)),
-              onTap: () {
-                // Set default values for EMOM
-                _hiit.workTime = Duration(seconds: 60);
-                _hiit.repRest = Duration(seconds: 0);
-                _hiit.reps = 5;
-                _hiit.sets = 1;
-                _hiit.setRest = Duration(seconds: 0);
-                // Callback
-                _onHiitChanged();
-                // Close the drawer
-                Navigator.pop(context);
-              }),
-          ListTile(
-            title: Text('My Presets', style: TextStyle(
-                fontFamily: "Roboto", color: Colors.black54, fontWeight: FontWeight.bold,
-                fontSize: MediaQuery.of(context).size.width * 0.04)),
-              // Close the drawer
-              onTap: () {Navigator.pop(context);}),
-          ]));
+            leading: Text("EMOM Timer"), onTap: () {
+            // Set default values for EMOM
+            _hiit.workTime = Duration(seconds: 60);
+            _hiit.repRest = Duration(seconds: 0);
+            _hiit.reps = 5;
+            _hiit.sets = 1;
+            _hiit.setRest = Duration(seconds: 0);
+            // Callback
+            _onHiitChanged();
+            // Close the drawer
+            Navigator.pop(context);
+          }),
+          ExpansionTile(
+            title: Text("Custom Timers"), trailing: Icon(Icons.arrow_drop_down),
+            children: [
+              if (savedKeys.isEmpty)
+                Text("You have no custom timers")
+              else if (savedKeys.isNotEmpty)
+                SizedBox(
+                  height: 200, child: ListView.builder(
+                    padding: EdgeInsets.zero, itemCount: savedKeys.length,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        title: Text(savedKeys.elementAt(index)), onTap: () {
+                          var json = widget.prefs.getString(savedKeys.elementAt(index));
+                          _hiit = Hiit.fromJson(jsonDecode(json));
+                          // Callback
+                          _onHiitChanged();
+                          // Close the drawer
+                          Navigator.pop(context);
+                        },
+                      );
+                    },
+                  )
+                )
+            ],
+          )
+        ],
+      ),
+    );
   }
 }

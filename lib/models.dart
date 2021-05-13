@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:flutter/cupertino.dart';
+import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:audioplayers/audio_cache.dart';
@@ -46,22 +46,37 @@ class Hiit{
     return (workTime * reps * sets) + (repRest * sets * (reps-1)) + (setRest * (sets-1));
   }
 
-  Hiit.fromJson(Map<String, dynamic> json) :
-    reps = json['reps'],
-    workTime = Duration(seconds: json['workTime']),
-    repRest = Duration(seconds: json['repRest']),
-    sets = json['sets'],
-    setRest = Duration(seconds: json['setRest']),
-    delayTime = Duration(seconds: json['delayTime']);
+  // Encoding and decoding for shared preferences
+  // Sample: https://stackoverflow.com/questions/61316208/how-to-save-listobject-to-sharedpreferences-flutter
+  factory Hiit.fromJson(Map<String, dynamic> json) {
+    return Hiit(
+      reps: json['reps'],
+      workTime: Duration(seconds: json['workTime']),
+      repRest: Duration(seconds: json['repRest']),
+      sets: json['sets'],
+      setRest: Duration(seconds: json['setRest']),
+      delayTime: Duration(seconds: json['delayTime']));}
 
-  Map<String, dynamic> toJson() => {
-    'reps': reps,
-    'workTime': workTime.inSeconds,
-    'repRest': repRest.inSeconds,
-    'sets': sets,
-    'setRest': setRest.inSeconds,
-    'delayTime': delayTime.inSeconds,
+  static Map<String, dynamic> toMap(Hiit hiit) => {
+    'reps': hiit.reps,
+    'workTime': hiit.workTime.inSeconds,
+    'repRest': hiit.repRest.inSeconds,
+    'sets': hiit.sets,
+    'setRest': hiit.setRest.inSeconds,
+    'delayTime': hiit.delayTime.inSeconds,
   };
+
+  static String encode(List<Hiit> hiits) => json.encode(
+    hiits
+        .map<Map<String, dynamic>>((hiits) => Hiit.toMap(hiits))
+        .toList(),
+  );
+
+  static List<Hiit> decode(String hiits) =>
+      (json.decode(hiits) as List<dynamic>)
+          .map<Hiit>((item) => Hiit.fromJson(item))
+          .toList();
+
 }
 
 // All the possible workout states
