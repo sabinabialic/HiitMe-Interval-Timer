@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class InputAlertDialog extends StatefulWidget {
   final Widget title;
@@ -13,16 +14,16 @@ class InputAlertDialog extends StatefulWidget {
   }) : confirmWidget = confirmWidget ?? new Text(
         'OK', style: TextStyle(fontSize: 16, fontFamily: "Roboto", color: Colors.deepPurple)),
        cancelWidget = cancelWidget ?? new Text(
-           'CANCEL', style: TextStyle(fontSize: 16, fontFamily: "Roboto", color: Colors.deepPurple));
+         'CANCEL', style: TextStyle(fontSize: 16, fontFamily: "Roboto", color: Colors.deepPurple));
 
   @override
   State<StatefulWidget> createState() => new _InputAlertDialogState();
 }
 
 class _InputAlertDialogState extends State<InputAlertDialog> {
-  // Create a text controller and use it to retrieve the current value of the TextField.
+  // Create a text controller and use it to retrieve the current value of the TextField
   final inputController = TextEditingController();
-
+  // Form key to keep track of the state
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -32,7 +33,8 @@ class _InputAlertDialogState extends State<InputAlertDialog> {
     super.dispose();
   }
 
-  String _errorString = null;
+  // Error message on invalid user input
+  String _errorString;
 
   @override
   Widget build(BuildContext context) {
@@ -42,12 +44,13 @@ class _InputAlertDialogState extends State<InputAlertDialog> {
         controller: inputController, textInputAction: TextInputAction.go,
         keyboardType: TextInputType.text, textAlign: TextAlign.center,
         cursorColor: Colors.deepPurpleAccent, key: _formKey,
-        onChanged: (inputController) { doSomething(inputController); },
+        // When user input is changed, we need to make sure it's valid
+        onChanged: (inputController) { validateName(inputController); },
         decoration: InputDecoration(
           hintText: "Timer Name", errorText: _errorString,
             focusedBorder: UnderlineInputBorder(
               borderSide: BorderSide(color: Colors.deepPurple))
-        ), validator: validateName
+        ), validator: lastValidate
       ),
 
       actions: [
@@ -55,21 +58,24 @@ class _InputAlertDialogState extends State<InputAlertDialog> {
         TextButton(onPressed: () => Navigator.of(context).pop(),
           child: widget.cancelWidget),
         // If the user clicks ok, the new values need to be updated
-        TextButton(onPressed: () => validateName(inputController.text),
+        TextButton(onPressed: () async {lastValidate(inputController.text);},
           child: widget.confirmWidget)
       ],
     );
   }
 
-  String validateName(String value) {
-    if (value.isEmpty) {setState(() {_errorString = "Please enter some text";});}
-    else {Navigator.of(context).pop(value);}
-    return null;
-  }
-
-  void doSomething(String inputController) {
+  void validateName(String inputController) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     if (inputController.isEmpty) {
       setState(() {_errorString = "Please enter some text";});
-    } else setState(() {_errorString = null;});
+    } else if (prefs.containsKey(inputController)) {
+      setState(() {_errorString = "This timer name is already in use";});
+    }
+    else setState(() {_errorString = null;});
+  }
+
+  String lastValidate(String value) {
+    if (_errorString == null || _errorString.isEmpty) {Navigator.of(context).pop(value);}
+    return null;
   }
 }

@@ -25,6 +25,7 @@ dependencies:
   wakelock: ^0.5.1
   rate_my_app: ^1.1.0+1
   focused_menu: ^1.0.0
+  multilevel_drawer: ^1.0.3
 
 dev_dependencies:
   flutter_test:
