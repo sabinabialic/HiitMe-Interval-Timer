@@ -5,7 +5,7 @@
 
 # Interval Timer Flutter App
 
-A interval training timer written with Flutter for which is compatible with iOS and Android devices. This app was was built for my Honours Project at Carleton University during the Winter 2021 semester, supervised by Professor Louis Nel.
+A interval training timer written with Flutter for which is compatible with iOS and Android devices.
 
 ## Getting Started
 - [Install Flutter](https://flutter.dev/docs/get-started/install)
